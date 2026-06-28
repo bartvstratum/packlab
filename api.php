@@ -90,6 +90,24 @@ try {
             echo json_encode(['ok' => true, 'token' => $token, 'url' => share_url($token)]);
             break;
 
+        case 'sort_all':
+            $listId = (int) ($in['list_id'] ?? 0);
+            if (!owns_list($uid, $listId)) {
+                throw new RuntimeException('Invalid list', 400);
+            }
+            list_sort_by_weight($listId);
+            echo json_encode(['ok' => true]);
+            break;
+
+        case 'category_sort_items':
+            $catId = (int) ($in['category_id'] ?? 0);
+            if (category_owner($catId) !== $uid) {
+                throw new RuntimeException('Category not found', 404);
+            }
+            category_sort_items_by_weight($catId);
+            echo json_encode(['ok' => true]);
+            break;
+
         case 'category_update':
             $catId = (int) ($in['category_id'] ?? 0);
             if (category_owner($catId) !== $uid) {

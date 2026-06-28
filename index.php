@@ -173,6 +173,7 @@ $data = $listId ? list_full($listId) : null;
 
 <div class="list-menu cat-menu" id="catMenu" hidden style="position:fixed">
   <button class="lm-item" id="cmRename"><span class="material-symbols-rounded">edit</span>Rename</button>
+  <button class="lm-item" id="cmSort"><span class="material-symbols-rounded">sort</span>Sort by weight</button>
   <button class="lm-item" id="cmUp"><span class="material-symbols-rounded">arrow_upward</span>Move up</button>
   <button class="lm-item" id="cmDown"><span class="material-symbols-rounded">arrow_downward</span>Move down</button>
   <div class="lm-sep"></div>
@@ -214,6 +215,17 @@ if(toggleAll) toggleAll.addEventListener('click',()=>{
   const anyOpen = [...cats].some(c=>!c.classList.contains('collapsed'));
   cats.forEach(c=>c.classList.toggle('collapsed', anyOpen));
   syncToggleAll();
+});
+
+const sortCats = document.getElementById('sortCats');
+if(sortCats) sortCats.addEventListener('click', async ()=>{
+  const msg = 'Sort the whole list by weight?\n\n'
+    + '• Categories: heaviest first\n'
+    + '• Items in each category: by weight × quantity\n\n'
+    + 'You can still reorder manually afterwards.';
+  if(!confirm(msg)) return;
+  await api({action:'sort_all', list_id:LIST_ID});
+  location.reload();
 });
 
 const modal  = document.getElementById('itemModal');
@@ -391,6 +403,11 @@ document.getElementById('cmRename').addEventListener('click', async ()=>{
   const name = prompt('Rename category:', cur);
   if(!name || !name.trim()) return;
   await api({action:'category_update', category_id:id, name:name.trim()});
+  location.reload();
+});
+document.getElementById('cmSort').addEventListener('click', async ()=>{
+  const id = catMenuId; closeCatMenu();
+  await api({action:'category_sort_items', category_id:id});
   location.reload();
 });
 document.getElementById('cmUp').addEventListener('click', async ()=>{

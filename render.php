@@ -93,6 +93,11 @@ function render_categories(array $cats, bool $editable): void {
 function render_list(array $data, bool $editable): void {
   render_summary($data['totals']); ?>
   <div class="list-tools">
+<?php if ($editable): ?>
+    <button class="toggle-all" id="sortCats" title="Sort categories and all items by weight">
+      <span class="material-symbols-rounded">sort</span><span class="lbl">Sort by weight</span>
+    </button>
+<?php endif; ?>
     <button class="toggle-all" id="toggleAll">
       <span class="material-symbols-rounded">unfold_less</span><span class="lbl">Collapse all</span>
     </button>

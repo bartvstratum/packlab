@@ -172,7 +172,7 @@ tbody tr:hover .row-actions{opacity:1}
 .mini-btn .material-symbols-rounded{font-size:18px}
 
 /* collapse/expand all */
-.list-tools{display:flex;justify-content:flex-end;margin-bottom:10px}
+.list-tools{display:flex;justify-content:flex-end;gap:6px;margin-bottom:10px}
 .toggle-all{
   display:inline-flex;align-items:center;gap:5px;
   background:none;border:none;cursor:pointer;
