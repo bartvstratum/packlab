@@ -11,10 +11,10 @@ function csv_truthy(string $v): bool
 function csv_to_grams(float $w, string $unit): float
 {
     return match (strtolower(trim($unit))) {
-        'kg'        => $w * 1000,
-        'oz'        => $w * 28.349523125,
-        'lb', 'lbs' => $w * 453.59237,
-        default     => $w,
+        'kg', 'kilogram', 'kilograms'  => $w * 1000,
+        'oz', 'ounce', 'ounces'        => $w * 28.349523125,
+        'lb', 'lbs', 'pound', 'pounds' => $w * 453.59237,
+        default                        => $w,
     };
 }
 
