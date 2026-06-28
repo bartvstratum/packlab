@@ -67,8 +67,8 @@ function render_categories(array $cats, bool $editable): void {
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag<?= $it['worn'] ? ' on' : '' ?> wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag<?= $it['consumable'] ? ' on' : '' ?> cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag<?= $it['worn'] ? ' on' : '' ?> wear<?= $editable ? ' flag-btn' : '' ?>"<?php if ($editable): ?> data-flag="worn" role="button" tabindex="0"<?php endif; ?> title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag<?= $it['consumable'] ? ' on' : '' ?> cons<?= $editable ? ' flag-btn' : '' ?>"<?php if ($editable): ?> data-flag="consumable" role="button" tabindex="0"<?php endif; ?> title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
               <span class="mlabel num"><span class="material-symbols-rounded">scale</span><?= fmtg($it['weight']) ?> g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×<?= (int) $it['qty'] ?></span>

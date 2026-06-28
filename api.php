@@ -57,6 +57,19 @@ try {
             echo json_encode(['ok' => true, 'id' => $id]);
             break;
 
+        case 'item_flag':
+            $id = (int) ($in['id'] ?? 0);
+            if (item_owner($id) !== $uid) {
+                throw new RuntimeException('Item not found', 404);
+            }
+            $flag = (string) ($in['flag'] ?? '');
+            if (!in_array($flag, ['worn', 'consumable'], true)) {
+                throw new RuntimeException('Invalid flag', 400);
+            }
+            item_set_flag($id, $flag, !empty($in['value']) ? 1 : 0);
+            echo json_encode(['ok' => true]);
+            break;
+
         case 'item_delete':
             $id = (int) ($in['id'] ?? 0);
             if (item_owner($id) !== $uid) {

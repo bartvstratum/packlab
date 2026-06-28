@@ -272,6 +272,25 @@ document.querySelectorAll('.mini-btn[title="Delete"]').forEach(b=>
     location.reload();
   }));
 
+document.querySelectorAll('.flag-btn').forEach(f=>{
+  const toggle = async ()=>{
+    if(f.dataset.busy) return;
+    f.dataset.busy='1';
+    const on = !f.classList.contains('on');
+    f.classList.toggle('on', on);
+    const tr=f.closest('tr');
+    try{
+      await api({action:'item_flag', id:parseInt(tr.dataset.itemId), flag:f.dataset.flag, value:on?1:0});
+      location.reload();
+    }catch(e){
+      f.classList.toggle('on', !on);
+      delete f.dataset.busy;
+    }
+  };
+  f.addEventListener('click', toggle);
+  f.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); }});
+});
+
 document.getElementById('modalSave').addEventListener('click', async ()=>{
   const name=fName.value.trim();
   if(!name){ alert('Name is required'); return; }

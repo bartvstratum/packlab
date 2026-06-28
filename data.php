@@ -162,6 +162,13 @@ function item_update(int $id, array $f): void
     ]);
 }
 
+function item_set_flag(int $id, string $flag, int $val): void
+{
+    if (!in_array($flag, ['worn', 'consumable'], true)) return;
+    $s = db()->prepare("UPDATE items SET $flag = ? WHERE id = ?");
+    $s->execute([$val ? 1 : 0, $id]);
+}
+
 function item_delete(int $id): void
 {
     $s = db()->prepare('DELETE FROM items WHERE id = ?');
