@@ -317,3 +317,9 @@ function list_sort_by_weight(int $listId): void
         category_sort_items_by_weight((int) $c['id']);
     }
 }
+
+function user_set_password(int $id, string $password): void
+{
+    $s = db()->prepare('UPDATE users SET password_hash = ? WHERE id = ?');
+    $s->execute([password_hash($password, PASSWORD_DEFAULT), $id]);
+}

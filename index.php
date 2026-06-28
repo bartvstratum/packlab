@@ -63,7 +63,7 @@ $data = $listId ? list_full($listId) : null;
     </div>
     <input type="file" id="importFile" accept=".csv,text/csv" hidden>
     <button class="icon-btn" id="shareBtn" title="Share"><span class="material-symbols-rounded">share</span></button>
-    <a class="icon-btn" href="logout.php" title="Log out"><span class="material-symbols-rounded">logout</span></a>
+    <a class="icon-btn" href="account.php" title="Account"><span class="material-symbols-rounded">account_circle</span></a>
   </div>
 </header>
 
