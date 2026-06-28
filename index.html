@@ -183,6 +183,17 @@ tbody tr:hover .row-actions{opacity:1}
 .mini-btn{width:28px;height:28px}
 .mini-btn .material-symbols-rounded{font-size:18px}
 
+/* collapse/expand all */
+.list-tools{display:flex;justify-content:flex-end;margin-bottom:10px}
+.toggle-all{
+  display:inline-flex;align-items:center;gap:5px;
+  background:none;border:none;cursor:pointer;
+  color:var(--muted);font:inherit;font-weight:600;font-size:13px;
+  padding:6px 9px;border-radius:8px;
+}
+.toggle-all:hover{background:var(--surface);color:var(--text)}
+.toggle-all .material-symbols-rounded{font-size:19px}
+
 /* add category */
 .add-cat{
   width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
@@ -363,6 +374,12 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     </div>
   </section>
 
+  <div class="list-tools">
+    <button class="toggle-all" id="toggleAll">
+      <span class="material-symbols-rounded">unfold_less</span><span class="lbl">Collapse all</span>
+    </button>
+  </div>
+
   <!-- ===== Category: Shelter and sleep ===== -->
   <section class="category" style="--cat:var(--c1)">
     <div class="cat-head">
@@ -370,7 +387,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Shelter and sleep</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>4</b> items · <b>1,686</b> g</span>
+      <span class="cat-meta"><b>4</b> items · <b>1,686</b> g · <b>14%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -471,7 +488,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Clothes</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>16</b> items · <b>2,658</b> g</span>
+      <span class="cat-meta"><b>16</b> items · <b>2,658</b> g · <b>22%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -811,7 +828,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Electronics</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>12</b> items · <b>1,335</b> g</span>
+      <span class="cat-meta"><b>12</b> items · <b>1,335</b> g · <b>11%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -1072,7 +1089,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Pack</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>8</b> items · <b>1,021</b> g</span>
+      <span class="cat-meta"><b>8</b> items · <b>1,021</b> g · <b>9%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -1253,7 +1270,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Misc</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>14</b> items · <b>749</b> g</span>
+      <span class="cat-meta"><b>14</b> items · <b>749</b> g · <b>6%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -1553,7 +1570,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Personal care</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>6</b> items · <b>477</b> g</span>
+      <span class="cat-meta"><b>6</b> items · <b>477</b> g · <b>4%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -1693,7 +1710,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Cooking</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>6</b> items · <b>227</b> g</span>
+      <span class="cat-meta"><b>6</b> items · <b>227</b> g · <b>2%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -1833,7 +1850,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Consumables</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>3</b> items · <b>3,810</b> g</span>
+      <span class="cat-meta"><b>3</b> items · <b>3,810</b> g · <b>32%</b></span>
     </div>
     <div class="table-wrap">
       <table>
@@ -1992,12 +2009,28 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 </div>
 
 <script>
-// purely cosmetic: collapse/expand categories for the design preview
+// collapse/expand categories
+const cats = document.querySelectorAll('.category');
+const toggleAll = document.getElementById('toggleAll');
+
+function syncToggleAll(){
+  const anyOpen = [...cats].some(c=>!c.classList.contains('collapsed'));
+  toggleAll.querySelector('.lbl').textContent = anyOpen ? 'Collapse all' : 'Expand all';
+  toggleAll.querySelector('.material-symbols-rounded').textContent = anyOpen ? 'unfold_less' : 'unfold_more';
+}
+
 document.querySelectorAll('.cat-head').forEach(h=>{
   h.addEventListener('click',e=>{
     if(e.target.closest('button'))return;
     h.parentElement.classList.toggle('collapsed');
+    syncToggleAll();
   });
+});
+
+toggleAll.addEventListener('click',()=>{
+  const anyOpen = [...cats].some(c=>!c.classList.contains('collapsed'));
+  cats.forEach(c=>c.classList.toggle('collapsed', anyOpen)); // anyOpen → collapse all, else expand all
+  syncToggleAll();
 });
 
 // --- modal (design preview wiring) ---
