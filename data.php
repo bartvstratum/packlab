@@ -95,12 +95,6 @@ function list_share_enable(int $id): string
     return $t;
 }
 
-function list_share_disable(int $id): void
-{
-    $s = db()->prepare('UPDATE lists SET share_token = NULL WHERE id = ?');
-    $s->execute([$id]);
-}
-
 function categories_for_list(int $listId): array
 {
     $s = db()->prepare('SELECT * FROM categories WHERE list_id = ? ORDER BY position, id');
@@ -254,4 +248,10 @@ function item_owner(int $itemId): ?int
     $s->execute([$itemId]);
     $r = $s->fetch();
     return $r ? (int) $r['user_id'] : null;
+}
+
+function share_url(string $token): string
+{
+    $base = rtrim(config()['base_url'] ?? '', '/');
+    return $base . '/share.php?token=' . $token;
 }

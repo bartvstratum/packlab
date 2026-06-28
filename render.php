@@ -1,0 +1,100 @@
+<?php
+
+function h($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
+function fmtg($w) { $w = round((float) $w, 1); return $w == (int) $w ? number_format($w) : number_format($w, 1); }
+
+function render_summary(array $t): void { ?>
+  <section class="summary">
+    <div class="stat">
+      <div class="k"><span class="material-symbols-rounded">inventory_2</span>Base weight</div>
+      <div class="v"><?= fmtg($t['base']) ?> <small>g</small><span class="pct"><?= $t['base_pct'] ?>%</span></div>
+    </div>
+    <div class="op-sep" aria-hidden="true">+</div>
+    <div class="stat">
+      <div class="k"><span class="material-symbols-rounded">restaurant</span>Consumable</div>
+      <div class="v"><?= fmtg($t['consumable']) ?> <small>g</small><span class="pct"><?= $t['consumable_pct'] ?>%</span></div>
+    </div>
+    <div class="op-sep" aria-hidden="true">=</div>
+    <div class="stat">
+      <div class="k"><span class="material-symbols-rounded">backpack</span>Pack weight</div>
+      <div class="v"><?= fmtg($t['pack']) ?> <small>g</small><span class="pct"><?= $t['pack_pct'] ?>%</span></div>
+    </div>
+    <div class="op-sep" aria-hidden="true">+</div>
+    <div class="stat">
+      <div class="k"><span class="material-symbols-rounded">checkroom</span>Worn</div>
+      <div class="v"><?= fmtg($t['worn']) ?> <small>g</small><span class="pct"><?= $t['worn_pct'] ?>%</span></div>
+    </div>
+    <div class="op-sep" aria-hidden="true">=</div>
+    <div class="stat">
+      <div class="k"><span class="material-symbols-rounded">scale</span>Total</div>
+      <div class="v"><?= fmtg($t['total']) ?> <small>g</small><span class="pct">100%</span></div>
+    </div>
+  </section>
+<?php }
+
+function render_categories(array $cats, bool $editable): void {
+  foreach ($cats as $c): ?>
+  <section class="category" data-cat-id="<?= (int) $c['id'] ?>" style="--cat:<?= h($c['color'] ?: '#cccccc') ?>">
+    <div class="cat-head">
+      <span class="material-symbols-rounded chev">expand_more</span>
+      <span class="cat-dot"></span>
+      <span class="cat-title"><?= h($c['name']) ?></span>
+<?php if ($editable): ?>
+      <button class="cat-add" data-cat-id="<?= (int) $c['id'] ?>" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
+<?php endif; ?>
+      <span class="cat-meta"><b><?= count($c['items']) ?></b> items · <b><?= fmtg($c['weight']) ?></b> g · <b><?= $c['pct'] ?>%</b></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><?php if ($editable): ?><th></th><?php endif; ?></tr>
+        </thead>
+        <tbody>
+<?php foreach ($c['items'] as $it): ?>
+          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>"<?php endif; ?>>
+            <td class="col-item">
+              <div class="item-name"><?= h($it['name']) ?></div>
+<?php if (($it['description'] ?? '') !== ''): ?>
+              <div class="item-desc"><?= h($it['description']) ?></div>
+<?php endif; ?>
+<?php if (!empty($it['url'])): ?>
+              <a class="item-link" href="<?= h($it['url']) ?>" target="_blank" rel="noopener" title="Open link"><span class="material-symbols-rounded">open_in_new</span></a>
+<?php endif; ?>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag<?= $it['worn'] ? ' on' : '' ?> wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag<?= $it['consumable'] ? ' on' : '' ?> cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span><?= fmtg($it['weight']) ?> g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×<?= (int) $it['qty'] ?></span>
+            </td>
+            <td class="right num col-hide-m"><?= fmtg($it['weight']) ?> g</td>
+            <td class="center col-hide-m"><span class="qty"><?= (int) $it['qty'] ?></span></td>
+<?php if ($editable): ?>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+<?php endif; ?>
+          </tr>
+<?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<?php endforeach;
+}
+
+function render_list(array $data, bool $editable): void {
+  render_summary($data['totals']); ?>
+  <div class="list-tools">
+    <button class="toggle-all" id="toggleAll">
+      <span class="material-symbols-rounded">unfold_less</span><span class="lbl">Collapse all</span>
+    </button>
+  </div>
+<?php render_categories($data['categories'], $editable);
+  if ($editable): ?>
+  <button class="add-cat"><span class="material-symbols-rounded">add</span>Add category</button>
+<?php endif;
+}

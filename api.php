@@ -81,6 +81,15 @@ try {
             echo json_encode(['ok' => true, 'id' => $id]);
             break;
 
+        case 'share_enable':
+            $listId = (int) ($in['list_id'] ?? 0);
+            if (!owns_list($uid, $listId)) {
+                throw new RuntimeException('Invalid list', 400);
+            }
+            $token = list_share_enable($listId);
+            echo json_encode(['ok' => true, 'token' => $token, 'url' => share_url($token)]);
+            break;
+
         default:
             http_response_code(400);
             echo json_encode(['error' => 'Unknown action']);
