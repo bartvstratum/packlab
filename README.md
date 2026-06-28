@@ -1,14 +1,15 @@
 # PackLab - gear list editor
 
-Sunday vibe-coding project: a reimplementation of LighterPack with (hopefully) fewer bugs,
+Sunday vibe-coding project: a modern looking LighterPack alternative with some bugs fixed,
 better mobile editing, and a few personal preferences baked in — most notably
-**sane units only**.
+weights in grams only.
+
+I might add oz/lb/stones/slugs/weys later — but until I do, you're spared from ever learning that 1 wey = 6.5 tod = 13 stone = 182 lb = 82.554 kg. **SI** only for now. You're welcome.
 
 ![PackLab screenshot](images/packlab_example.png)
 
-The CSV files are **two-way compatible** with LighterPack: you can import a LighterPack
-export here and export a file that imports back into LighterPack. However, on import,
-weights in oz/lb/kg are **converted to grams**.
+The CSV files are **two-way compatible** with LighterPack: you can import a LighterPack export here and export a file that imports back into LighterPack. However, on import, **weights in oz/lb/kg are converted to grams**
+Unlike LighterPack, PackLab actually uses the flag columns in the CSV (which LighterPack writes but ignores), and adds a few of its own flags. LighterPack ignores the extra ones on import, so round-tripping is lossy in that direction only.
 
 Most of the code was written by Claude (Anthropic's Claude Code, model Claude Opus 4.8)
 
