@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS items (
   qty         INTEGER NOT NULL DEFAULT 1,
   worn        INTEGER NOT NULL DEFAULT 0,
   consumable  INTEGER NOT NULL DEFAULT 0,
+  flag        INTEGER NOT NULL DEFAULT 0,
   url         TEXT,
   position    INTEGER NOT NULL DEFAULT 0
 );

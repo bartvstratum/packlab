@@ -55,7 +55,7 @@ function render_categories(array $cats, bool $editable): void {
         </thead>
         <tbody>
 <?php foreach ($c['items'] as $it): ?>
-          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>"<?php endif; ?>>
+          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>" data-flag="<?= (int) $it['flag'] ?>"<?php endif; ?>>
             <td class="col-item">
               <div class="item-name"><?= h($it['name']) ?></div>
 <?php if (($it['description'] ?? '') !== ''): ?>
@@ -67,6 +67,8 @@ function render_categories(array $cats, bool $editable): void {
             </td>
             <td class="center col-meta">
               <div class="flags">
+                <span class="flag<?= $it['flag'] ? ' on' : '' ?> mark<?= $editable ? ' flag-btn' : '' ?>"<?php if ($editable): ?> data-flag="flag" role="button" tabindex="0"<?php endif; ?> title="Flagged"><span class="material-symbols-rounded">flag</span></span>
+                <span class="flag-sep" aria-hidden="true"></span>
                 <span class="flag<?= $it['worn'] ? ' on' : '' ?> wear<?= $editable ? ' flag-btn' : '' ?>"<?php if ($editable): ?> data-flag="worn" role="button" tabindex="0"<?php endif; ?> title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
                 <span class="flag<?= $it['consumable'] ? ' on' : '' ?> cons<?= $editable ? ' flag-btn' : '' ?>"<?php if ($editable): ?> data-flag="consumable" role="button" tabindex="0"<?php endif; ?> title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>

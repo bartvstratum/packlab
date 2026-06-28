@@ -24,6 +24,7 @@ $fields_from = function (array $in): array {
         'qty'         => (int) ($in['qty'] ?? 1),
         'worn'        => !empty($in['worn']) ? 1 : 0,
         'consumable'  => !empty($in['consumable']) ? 1 : 0,
+        'flag'        => !empty($in['flag']) ? 1 : 0,
         'url'         => trim((string) ($in['url'] ?? '')) ?: null,
     ];
 };
@@ -63,7 +64,7 @@ try {
                 throw new RuntimeException('Item not found', 404);
             }
             $flag = (string) ($in['flag'] ?? '');
-            if (!in_array($flag, ['worn', 'consumable'], true)) {
+            if (!in_array($flag, ['worn', 'consumable', 'flag'], true)) {
                 throw new RuntimeException('Invalid flag', 400);
             }
             item_set_flag($id, $flag, !empty($in['value']) ? 1 : 0);

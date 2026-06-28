@@ -53,7 +53,7 @@ const mIcon  = document.getElementById('modalIcon');
 const mDelete= document.getElementById('modalDelete');
 const fName=document.getElementById('f-name'), fDesc=document.getElementById('f-desc'), fUrl=document.getElementById('f-url'),
       fCat=document.getElementById('f-cat'), fWeight=document.getElementById('f-weight'), fQty=document.getElementById('f-qty');
-const tWear=modal.querySelector('.toggle.wear'), tCons=modal.querySelector('.toggle.cons');
+const tWear=modal.querySelector('.toggle.wear'), tCons=modal.querySelector('.toggle.cons'), tMark=modal.querySelector('.toggle.mark');
 let editingId = null;
 
 function setToggle(t,on){ t.classList.toggle('on',on); t.querySelector('input').checked = on; }
@@ -63,7 +63,7 @@ function openAdd(catId){
   mTitle.textContent='Add item'; mIcon.textContent='add'; mDelete.style.display='none';
   fName.value=''; fDesc.value=''; fUrl.value=''; fWeight.value=''; fQty.value='1';
   if(catId) fCat.value=String(catId);
-  setToggle(tWear,false); setToggle(tCons,false);
+  setToggle(tWear,false); setToggle(tCons,false); setToggle(tMark,false);
   modal.classList.add('open'); fName.focus();
 }
 function openEdit(tr){
@@ -72,7 +72,7 @@ function openEdit(tr){
   fName.value=tr.dataset.name||''; fDesc.value=tr.dataset.desc||''; fUrl.value=tr.dataset.url||'';
   fWeight.value=tr.dataset.weight||''; fQty.value=tr.dataset.qty||'0';
   const catId=tr.closest('.category').dataset.catId; if(catId) fCat.value=String(catId);
-  setToggle(tWear, tr.dataset.worn==='1'); setToggle(tCons, tr.dataset.consumable==='1');
+  setToggle(tWear, tr.dataset.worn==='1'); setToggle(tCons, tr.dataset.consumable==='1'); setToggle(tMark, tr.dataset.flag==='1');
   modal.classList.add('open');
 }
 function closeModal(){ modal.classList.remove('open'); }
@@ -118,7 +118,8 @@ document.getElementById('modalSave').addEventListener('click', async ()=>{
     name, description:fDesc.value.trim(), url:fUrl.value.trim(),
     weight:parseFloat(fWeight.value)||0, qty:parseInt(fQty.value)||0,
     worn:tWear.querySelector('input').checked?1:0,
-    consumable:tCons.querySelector('input').checked?1:0
+    consumable:tCons.querySelector('input').checked?1:0,
+    flag:tMark.querySelector('input').checked?1:0
   });
   location.reload();
 });

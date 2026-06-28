@@ -25,5 +25,11 @@ function db(): PDO
     $pdo->exec('PRAGMA foreign_keys = ON');
     $pdo->exec(file_get_contents(__DIR__ . '/schema.sql'));
 
+    // Lightweight migrations for existing databases
+    $cols = $pdo->query("PRAGMA table_info(items)")->fetchAll(PDO::FETCH_COLUMN, 1);
+    if (!in_array('flag', $cols, true)) {
+        $pdo->exec('ALTER TABLE items ADD COLUMN flag INTEGER NOT NULL DEFAULT 0');
+    }
+
     return $pdo;
 }

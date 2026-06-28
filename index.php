@@ -135,6 +135,9 @@ $data = $listId ? list_full($listId) : null;
           <label class="toggle cons">
             <input type="checkbox"><span class="material-symbols-rounded">restaurant</span>Consumable
           </label>
+          <label class="toggle mark">
+            <input type="checkbox"><span class="material-symbols-rounded">flag</span>Flag
+          </label>
         </div>
       </div>
     </div>
@@ -187,7 +190,7 @@ const PL = {
   listName: <?= json_encode($data['name'] ?? '') ?>
 };
 </script>
-<script src="app.js?v=1"></script>
+<script src="app.js?v=2"></script>
 
 </body>
 </html>

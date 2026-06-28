@@ -132,7 +132,7 @@ function items_for_category(int $catId): array
 function item_create(int $catId, array $f): int
 {
     $pos = next_pos('items', 'category_id', $catId);
-    $s = db()->prepare('INSERT INTO items (category_id, name, description, weight, qty, worn, consumable, url, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $s = db()->prepare('INSERT INTO items (category_id, name, description, weight, qty, worn, consumable, flag, url, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     $s->execute([
         $catId,
         $f['name'],
@@ -141,6 +141,7 @@ function item_create(int $catId, array $f): int
         max(0, (int) ($f['qty'] ?? 1)),
         !empty($f['worn']) ? 1 : 0,
         !empty($f['consumable']) ? 1 : 0,
+        !empty($f['flag']) ? 1 : 0,
         $f['url'] ?? null,
         $pos,
     ]);
@@ -149,7 +150,7 @@ function item_create(int $catId, array $f): int
 
 function item_update(int $id, array $f): void
 {
-    $s = db()->prepare('UPDATE items SET name = ?, description = ?, weight = ?, qty = ?, worn = ?, consumable = ?, url = ? WHERE id = ?');
+    $s = db()->prepare('UPDATE items SET name = ?, description = ?, weight = ?, qty = ?, worn = ?, consumable = ?, flag = ?, url = ? WHERE id = ?');
     $s->execute([
         $f['name'],
         $f['description'] ?? '',
@@ -157,6 +158,7 @@ function item_update(int $id, array $f): void
         max(0, (int) ($f['qty'] ?? 1)),
         !empty($f['worn']) ? 1 : 0,
         !empty($f['consumable']) ? 1 : 0,
+        !empty($f['flag']) ? 1 : 0,
         $f['url'] ?? null,
         $id,
     ]);
@@ -164,7 +166,7 @@ function item_update(int $id, array $f): void
 
 function item_set_flag(int $id, string $flag, int $val): void
 {
-    if (!in_array($flag, ['worn', 'consumable'], true)) return;
+    if (!in_array($flag, ['worn', 'consumable', 'flag'], true)) return;
     $s = db()->prepare("UPDATE items SET $flag = ? WHERE id = ?");
     $s->execute([$val ? 1 : 0, $id]);
 }

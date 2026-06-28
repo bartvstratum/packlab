@@ -29,7 +29,7 @@ function csv_export(int $listId): string
     if (!$list) return '';
 
     $out = fopen('php://temp', 'r+');
-    fputcsv($out, ['Item Name', 'Category', 'desc', 'qty', 'weight', 'unit', 'url', 'price', 'worn', 'consumable']);
+    fputcsv($out, ['Item Name', 'Category', 'desc', 'qty', 'weight', 'unit', 'url', 'price', 'worn', 'consumable', 'flag']);
     foreach ($list['categories'] as $c) {
         foreach ($c['items'] as $it) {
             fputcsv($out, [
@@ -43,6 +43,7 @@ function csv_export(int $listId): string
                 '',
                 $it['worn'] ? '1' : '',
                 $it['consumable'] ? '1' : '',
+                $it['flag'] ? '1' : '',
             ]);
         }
     }
@@ -88,6 +89,7 @@ function csv_import(int $userId, string $csv, ?string $listName = null): int
             'qty'         => $qty,
             'worn'        => csv_truthy($get($r, 'worn')) ? 1 : 0,
             'consumable'  => $consumable ? 1 : 0,
+            'flag'        => csv_truthy($get($r, 'flag')) ? 1 : 0,
             'url'         => $get($r, 'url') ?: null,
         ]);
     }

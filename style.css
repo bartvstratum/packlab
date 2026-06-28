@@ -6,8 +6,9 @@
   --muted:#6b7280;
   --accent:#2563eb;
   --accent-soft:#e8f0fe;
-  --wear:#e23b3b;
+  --wear:#3b82f6;
   --cons:#16a34a;
+  --flag:#e23b3b;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.10);
   --radius:12px;
   /* category accent colors */
@@ -150,7 +151,8 @@ tbody tr:hover{background:#fafbfc}
 .mlabel{display:none}
 
 /* flag pills */
-.flags{display:flex;gap:6px;justify-content:center}
+.flags{display:flex;gap:6px;justify-content:center;align-items:center}
+.flag-sep{flex:none;width:1px;height:20px;background:#c2c7cf;margin:0 4px}
 .flag{
   display:inline-flex;align-items:center;justify-content:center;
   width:24px;height:24px;border-radius:7px;
@@ -160,8 +162,9 @@ tbody tr:hover{background:#fafbfc}
 .flag-btn{cursor:pointer;transition:background .12s,color .12s,border-color .12s}
 .flag-btn:hover{border-color:#b9c0cb;color:#9aa1ac}
 .flag-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.flag.on.wear{background:#fbd5d5;color:#c42b2b;border-color:#e89a9a}
+.flag.on.wear{background:#d6e4fb;color:#1f5fd1;border-color:#a3c5f5}
 .flag.on.cons{background:#cfead9;color:#11823b;border-color:#90cba6}
+.flag.on.mark{background:#fbd5d5;color:#c42b2b;border-color:#e89a9a}
 
 .qty{
   display:inline-block;min-width:30px;text-align:center;
@@ -261,8 +264,9 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 }
 .toggle .material-symbols-rounded{font-size:19px}
 .toggle input{display:none}
-.toggle.wear.on{background:#fbd5d5;color:#c42b2b;border-color:#e89a9a}
+.toggle.wear.on{background:#d6e4fb;color:#1f5fd1;border-color:#a3c5f5}
 .toggle.cons.on{background:#cfead9;color:#11823b;border-color:#90cba6}
+.toggle.mark.on{background:#fbd5d5;color:#c42b2b;border-color:#e89a9a}
 .modal-foot{display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid var(--border)}
 .btn{
   padding:10px 16px;border-radius:10px;font:inherit;font-weight:600;cursor:pointer;
