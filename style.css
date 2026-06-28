@@ -160,8 +160,8 @@ tbody tr:hover{background:#fafbfc}
 .flag-btn{cursor:pointer;transition:background .12s,color .12s,border-color .12s}
 .flag-btn:hover{border-color:#b9c0cb;color:#9aa1ac}
 .flag-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.flag.on.wear{background:var(--wear);color:#fff;border-color:var(--wear)}
-.flag.on.cons{background:var(--cons);color:#fff;border-color:var(--cons)}
+.flag.on.wear{background:#fbd5d5;color:#c42b2b;border-color:#e89a9a}
+.flag.on.cons{background:#cfead9;color:#11823b;border-color:#90cba6}
 
 .qty{
   display:inline-block;min-width:30px;text-align:center;
@@ -261,8 +261,8 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 }
 .toggle .material-symbols-rounded{font-size:19px}
 .toggle input{display:none}
-.toggle.wear.on{background:var(--wear);color:#fff;border-color:var(--wear)}
-.toggle.cons.on{background:var(--cons);color:#fff;border-color:var(--cons)}
+.toggle.wear.on{background:#fbd5d5;color:#c42b2b;border-color:#e89a9a}
+.toggle.cons.on{background:#cfead9;color:#11823b;border-color:#90cba6}
 .modal-foot{display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid var(--border)}
 .btn{
   padding:10px 16px;border-radius:10px;font:inherit;font-weight:600;cursor:pointer;
