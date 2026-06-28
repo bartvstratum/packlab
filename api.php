@@ -90,6 +90,37 @@ try {
             echo json_encode(['ok' => true, 'token' => $token, 'url' => share_url($token)]);
             break;
 
+        case 'list_create':
+            $name = trim((string) ($in['name'] ?? ''));
+            if ($name === '') {
+                throw new RuntimeException('Name is required', 400);
+            }
+            $id = list_create($uid, $name);
+            echo json_encode(['ok' => true, 'id' => $id]);
+            break;
+
+        case 'list_rename':
+            $listId = (int) ($in['list_id'] ?? 0);
+            if (!owns_list($uid, $listId)) {
+                throw new RuntimeException('Invalid list', 400);
+            }
+            $name = trim((string) ($in['name'] ?? ''));
+            if ($name === '') {
+                throw new RuntimeException('Name is required', 400);
+            }
+            list_rename($listId, $name);
+            echo json_encode(['ok' => true]);
+            break;
+
+        case 'list_delete':
+            $listId = (int) ($in['list_id'] ?? 0);
+            if (!owns_list($uid, $listId)) {
+                throw new RuntimeException('Invalid list', 400);
+            }
+            list_delete($listId);
+            echo json_encode(['ok' => true]);
+            break;
+
         default:
             http_response_code(400);
             echo json_encode(['error' => 'Unknown action']);

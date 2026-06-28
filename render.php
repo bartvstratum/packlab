@@ -2,32 +2,33 @@
 
 function h($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
 function fmtg($w) { $w = round((float) $w, 1); return $w == (int) $w ? number_format($w) : number_format($w, 1); }
+function fmtg0($w) { return number_format(round((float) $w)); }
 
 function render_summary(array $t): void { ?>
   <section class="summary">
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">inventory_2</span>Base weight</div>
-      <div class="v"><?= fmtg($t['base']) ?> <small>g</small><span class="pct"><?= $t['base_pct'] ?>%</span></div>
+      <div class="v"><?= fmtg0($t['base']) ?> <small>g</small><span class="pct"><?= $t['base_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">+</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">restaurant</span>Consumable</div>
-      <div class="v"><?= fmtg($t['consumable']) ?> <small>g</small><span class="pct"><?= $t['consumable_pct'] ?>%</span></div>
+      <div class="v"><?= fmtg0($t['consumable']) ?> <small>g</small><span class="pct"><?= $t['consumable_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">=</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">backpack</span>Pack weight</div>
-      <div class="v"><?= fmtg($t['pack']) ?> <small>g</small><span class="pct"><?= $t['pack_pct'] ?>%</span></div>
+      <div class="v"><?= fmtg0($t['pack']) ?> <small>g</small><span class="pct"><?= $t['pack_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">+</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">checkroom</span>Worn</div>
-      <div class="v"><?= fmtg($t['worn']) ?> <small>g</small><span class="pct"><?= $t['worn_pct'] ?>%</span></div>
+      <div class="v"><?= fmtg0($t['worn']) ?> <small>g</small><span class="pct"><?= $t['worn_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">=</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">scale</span>Total</div>
-      <div class="v"><?= fmtg($t['total']) ?> <small>g</small><span class="pct">100%</span></div>
+      <div class="v"><?= fmtg0($t['total']) ?> <small>g</small><span class="pct">100%</span></div>
     </div>
   </section>
 <?php }
@@ -42,7 +43,7 @@ function render_categories(array $cats, bool $editable): void {
 <?php if ($editable): ?>
       <button class="cat-add" data-cat-id="<?= (int) $c['id'] ?>" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
 <?php endif; ?>
-      <span class="cat-meta"><b><?= count($c['items']) ?></b> items · <b><?= fmtg($c['weight']) ?></b> g · <b><?= $c['pct'] ?>%</b></span>
+      <span class="cat-meta"><b><?= count($c['items']) ?></b> items · <b><?= fmtg0($c['weight']) ?></b> g · <b><?= $c['pct'] ?>%</b></span>
     </div>
     <div class="table-wrap">
       <table>

@@ -35,11 +35,33 @@ $data = $listId ? list_full($listId) : null;
       <span class="name">PackLab</span>
     </div>
     <div class="spacer"></div>
-    <button class="list-switch" title="Switch list">
-      <span class="material-symbols-rounded">checklist</span>
-      <span class="label"><?= h($data['name'] ?? 'No list') ?></span>
-      <span class="material-symbols-rounded">expand_more</span>
-    </button>
+    <div class="list-switch-wrap">
+      <button class="list-switch" id="listSwitch" title="Switch list">
+        <span class="material-symbols-rounded">checklist</span>
+        <span class="label"><?= h($data['name'] ?? 'No list') ?></span>
+        <span class="material-symbols-rounded">expand_more</span>
+      </button>
+      <div class="list-menu" id="listMenu" hidden>
+<?php foreach ($lists as $l): ?>
+        <a class="lm-item<?= (int) $l['id'] === $listId ? ' current' : '' ?>" href="?list=<?= (int) $l['id'] ?>">
+          <span class="material-symbols-rounded">checklist</span>
+          <span class="lm-label"><?= h($l['name']) ?></span>
+<?php if ((int) $l['id'] === $listId): ?><span class="material-symbols-rounded lm-check">check</span><?php endif; ?>
+        </a>
+<?php endforeach; ?>
+        <div class="lm-sep"></div>
+        <button class="lm-item" id="lmNew"><span class="material-symbols-rounded">add</span>New list</button>
+<?php if ($data): ?>
+        <button class="lm-item" id="lmRename"><span class="material-symbols-rounded">edit</span>Rename list</button>
+        <a class="lm-item" href="export.php?list=<?= $listId ?>"><span class="material-symbols-rounded">download</span>Export CSV</a>
+<?php endif; ?>
+        <button class="lm-item" id="lmImport"><span class="material-symbols-rounded">upload</span>Import CSV</button>
+<?php if ($data): ?>
+        <button class="lm-item lm-danger" id="lmDelete"><span class="material-symbols-rounded">delete</span>Delete list</button>
+<?php endif; ?>
+      </div>
+    </div>
+    <input type="file" id="importFile" accept=".csv,text/csv" hidden>
     <button class="icon-btn" id="shareBtn" title="Share"><span class="material-symbols-rounded">share</span></button>
     <a class="icon-btn" href="logout.php" title="Log out"><span class="material-symbols-rounded">logout</span></a>
   </div>
@@ -292,6 +314,46 @@ document.getElementById('shareCopy').addEventListener('click', ()=>{
 });
 shareModal.addEventListener('click', e=>{
   if(e.target === shareModal || e.target.closest('[data-close-share]')) closeShare();
+});
+
+// list switcher menu
+const listSwitch = document.getElementById('listSwitch');
+const listMenu = document.getElementById('listMenu');
+listSwitch.addEventListener('click', e=>{ e.stopPropagation(); listMenu.hidden = !listMenu.hidden; });
+document.addEventListener('click', e=>{ if(!listMenu.hidden && !e.target.closest('.list-switch-wrap')) listMenu.hidden = true; });
+
+document.getElementById('lmNew').addEventListener('click', async ()=>{
+  const name = prompt('New list name:');
+  if(!name || !name.trim()) return;
+  const r = await api({action:'list_create', name:name.trim()});
+  location.href = '?list=' + r.id;
+});
+const lmRename = document.getElementById('lmRename');
+if(lmRename) lmRename.addEventListener('click', async ()=>{
+  const name = prompt('Rename list:', <?= json_encode($data['name'] ?? '') ?>);
+  if(!name || !name.trim()) return;
+  await api({action:'list_rename', list_id:LIST_ID, name:name.trim()});
+  location.reload();
+});
+const lmDelete = document.getElementById('lmDelete');
+if(lmDelete) lmDelete.addEventListener('click', async ()=>{
+  if(!confirm('Delete this list and everything in it?')) return;
+  await api({action:'list_delete', list_id:LIST_ID});
+  location.href = 'index.php';
+});
+
+// CSV import
+const importFile = document.getElementById('importFile');
+document.getElementById('lmImport').addEventListener('click', ()=> importFile.click());
+importFile.addEventListener('change', async ()=>{
+  if(!importFile.files.length) return;
+  const fd = new FormData();
+  fd.append('csv', importFile.files[0]);
+  fd.append('csrf', CSRF);
+  const res = await fetch('import.php', {method:'POST', body:fd});
+  let d = {}; try { d = await res.json(); } catch(e){}
+  if(!res.ok || d.error){ alert(d.error || ('Error ' + res.status)); return; }
+  location.href = '?list=' + d.id;
 });
 </script>
 
