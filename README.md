@@ -1,5 +1,17 @@
 # PackLab
-Back/bike packing list
+
+Back/bike packing gear list — a [LighterPack](https://lighterpack.com) alternative.
+
+A hobby project: a reimplementation of LighterPack with (hopefully) fewer bugs,
+better mobile editing, and a few personal preferences baked in — most notably
+**sane units only** (everything is grams; no ounces/pounds nonsense).
+
+CSV is **two-way compatible** with LighterPack: you can import a LighterPack
+export here and export a file that imports back into LighterPack. On import,
+weights in oz/lb/kg are **converted to grams**.
+
+> Most of the code was written by Claude (Anthropic's Claude Code, model
+> Claude Opus 4.8) — a typical Sunday vibe-coding project.
 
 ## Run locally
 
