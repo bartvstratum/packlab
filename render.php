@@ -44,6 +44,9 @@ function render_categories(array $cats, bool $editable): void {
       <button class="cat-add" data-cat-id="<?= (int) $c['id'] ?>" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
 <?php endif; ?>
       <span class="cat-meta"><b><?= count($c['items']) ?></b> items · <b><?= fmtg0($c['weight']) ?></b> g · <b><?= $c['pct'] ?>%</b></span>
+<?php if ($editable): ?>
+      <button class="icon-btn mini-btn cat-menu-btn" data-cat-id="<?= (int) $c['id'] ?>" data-cat-name="<?= h($c['name']) ?>" title="Category options"><span class="material-symbols-rounded">more_vert</span></button>
+<?php endif; ?>
     </div>
     <div class="table-wrap">
       <table>

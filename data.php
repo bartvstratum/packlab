@@ -255,3 +255,27 @@ function share_url(string $token): string
     $base = rtrim(config()['base_url'] ?? '', '/');
     return $base . '/share.php?token=' . $token;
 }
+
+function category_get(int $id): ?array
+{
+    $s = db()->prepare('SELECT * FROM categories WHERE id = ?');
+    $s->execute([$id]);
+    return $s->fetch() ?: null;
+}
+
+function category_move(int $id, int $dir): void
+{
+    $cat = category_get($id);
+    if (!$cat) return;
+    $cats = categories_for_list((int) $cat['list_id']);
+    $ids = array_map('intval', array_column($cats, 'id'));
+    $pos = array_search($id, $ids, true);
+    if ($pos === false) return;
+    $swap = $pos + ($dir < 0 ? -1 : 1);
+    if ($swap < 0 || $swap >= count($cats)) return;
+    $a = $cats[$pos];
+    $b = $cats[$swap];
+    $s = db()->prepare('UPDATE categories SET position = ? WHERE id = ?');
+    $s->execute([(int) $b['position'], (int) $a['id']]);
+    $s->execute([(int) $a['position'], (int) $b['id']]);
+}

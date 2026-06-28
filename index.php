@@ -171,6 +171,14 @@ $data = $listId ? list_full($listId) : null;
   </div>
 </div>
 
+<div class="list-menu cat-menu" id="catMenu" hidden style="position:fixed">
+  <button class="lm-item" id="cmRename"><span class="material-symbols-rounded">edit</span>Rename</button>
+  <button class="lm-item" id="cmUp"><span class="material-symbols-rounded">arrow_upward</span>Move up</button>
+  <button class="lm-item" id="cmDown"><span class="material-symbols-rounded">arrow_downward</span>Move down</button>
+  <div class="lm-sep"></div>
+  <button class="lm-item lm-danger" id="cmDelete"><span class="material-symbols-rounded">delete</span>Delete</button>
+</div>
+
 <script>
 const CSRF = <?= json_encode(csrf_token()) ?>;
 const LIST_ID = <?= (int) $listId ?>;
@@ -354,6 +362,52 @@ importFile.addEventListener('change', async ()=>{
   let d = {}; try { d = await res.json(); } catch(e){}
   if(!res.ok || d.error){ alert(d.error || ('Error ' + res.status)); return; }
   location.href = '?list=' + d.id;
+});
+
+// category options menu
+const catMenu = document.getElementById('catMenu');
+let catMenuId = null;
+function openCatMenu(btn){
+  catMenuId = parseInt(btn.dataset.catId);
+  catMenu.dataset.name = btn.dataset.catName || '';
+  catMenu.hidden = false;
+  const r = btn.getBoundingClientRect();
+  catMenu.style.top = (r.bottom + 6) + 'px';
+  catMenu.style.left = Math.max(8, r.right - catMenu.offsetWidth) + 'px';
+}
+function closeCatMenu(){ catMenu.hidden = true; catMenuId = null; }
+document.querySelectorAll('.cat-menu-btn').forEach(b=>
+  b.addEventListener('click', e=>{
+    e.stopPropagation();
+    if(!catMenu.hidden && catMenuId === parseInt(b.dataset.catId)) closeCatMenu();
+    else openCatMenu(b);
+  }));
+document.addEventListener('click', e=>{
+  if(!catMenu.hidden && !e.target.closest('#catMenu') && !e.target.closest('.cat-menu-btn')) closeCatMenu();
+});
+document.getElementById('cmRename').addEventListener('click', async ()=>{
+  const id = catMenuId, cur = catMenu.dataset.name || '';
+  closeCatMenu();
+  const name = prompt('Rename category:', cur);
+  if(!name || !name.trim()) return;
+  await api({action:'category_update', category_id:id, name:name.trim()});
+  location.reload();
+});
+document.getElementById('cmUp').addEventListener('click', async ()=>{
+  const id = catMenuId; closeCatMenu();
+  await api({action:'category_move', category_id:id, dir:-1});
+  location.reload();
+});
+document.getElementById('cmDown').addEventListener('click', async ()=>{
+  const id = catMenuId; closeCatMenu();
+  await api({action:'category_move', category_id:id, dir:1});
+  location.reload();
+});
+document.getElementById('cmDelete').addEventListener('click', async ()=>{
+  const id = catMenuId; closeCatMenu();
+  if(!confirm('Delete this category and all its items?')) return;
+  await api({action:'category_delete', category_id:id});
+  location.reload();
 });
 </script>
 

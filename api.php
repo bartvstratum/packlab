@@ -90,6 +90,38 @@ try {
             echo json_encode(['ok' => true, 'token' => $token, 'url' => share_url($token)]);
             break;
 
+        case 'category_update':
+            $catId = (int) ($in['category_id'] ?? 0);
+            if (category_owner($catId) !== $uid) {
+                throw new RuntimeException('Category not found', 404);
+            }
+            $name = trim((string) ($in['name'] ?? ''));
+            if ($name === '') {
+                throw new RuntimeException('Name is required', 400);
+            }
+            $cat = category_get($catId);
+            category_update($catId, ['name' => $name, 'color' => $cat['color'], 'icon' => $cat['icon']]);
+            echo json_encode(['ok' => true]);
+            break;
+
+        case 'category_delete':
+            $catId = (int) ($in['category_id'] ?? 0);
+            if (category_owner($catId) !== $uid) {
+                throw new RuntimeException('Category not found', 404);
+            }
+            category_delete($catId);
+            echo json_encode(['ok' => true]);
+            break;
+
+        case 'category_move':
+            $catId = (int) ($in['category_id'] ?? 0);
+            if (category_owner($catId) !== $uid) {
+                throw new RuntimeException('Category not found', 404);
+            }
+            category_move($catId, (int) ($in['dir'] ?? 0));
+            echo json_encode(['ok' => true]);
+            break;
+
         case 'list_create':
             $name = trim((string) ($in['name'] ?? ''));
             if ($name === '') {

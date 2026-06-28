@@ -340,3 +340,6 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .lm-danger{color:#d24b4b}
 .lm-danger .material-symbols-rounded{color:#d24b4b}
 .lm-sep{height:1px;background:var(--border);margin:6px 4px}
+
+/* category options menu: position by left only (not stretched to viewport edge) */
+.cat-menu{right:auto;min-width:170px}
