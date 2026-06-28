@@ -91,6 +91,16 @@ document.querySelectorAll('.mini-btn[title="Delete"]').forEach(b=>
     location.reload();
   }));
 
+function updateSummary(t){
+  if(!t) return;
+  const pct={base:t.base_pct,consumable:t.consumable_pct,pack:t.pack_pct,worn:t.worn_pct,total:t.total_pct};
+  document.querySelectorAll('.summary .stat').forEach(s=>{
+    const k=s.dataset.k; if(!k||t[k]===undefined) return;
+    const num=s.querySelector('.v-num'); if(num) num.textContent=Math.round(t[k]).toLocaleString('en-US');
+    const p=s.querySelector('.pct'); if(p && pct[k]!==undefined) p.textContent=pct[k]+'%';
+  });
+}
+
 document.querySelectorAll('.flag-btn').forEach(f=>{
   const toggle = async ()=>{
     if(f.dataset.busy) return;
@@ -98,11 +108,23 @@ document.querySelectorAll('.flag-btn').forEach(f=>{
     const on = !f.classList.contains('on');
     f.classList.toggle('on', on);
     const tr=f.closest('tr');
+    // worn and consumable are mutually exclusive: turning one on clears the other
+    if(on && (f.dataset.flag==='worn' || f.dataset.flag==='consumable')){
+      const other = f.dataset.flag==='worn' ? 'consumable' : 'worn';
+      const otherPill = tr.querySelector('.flag-btn[data-flag="'+other+'"]');
+      if(otherPill) otherPill.classList.remove('on');
+      tr.dataset[other] = '0';
+    }
     try{
-      await api({action:'item_flag', id:parseInt(tr.dataset.itemId), flag:f.dataset.flag, value:on?1:0});
-      location.reload();
+      const r = await api({action:'item_flag', id:parseInt(tr.dataset.itemId), flag:f.dataset.flag, value:on?1:0});
+      // keep the row in sync so the edit modal reflects the new state
+      if(f.dataset.flag==='worn') tr.dataset.worn = on?'1':'0';
+      else if(f.dataset.flag==='consumable') tr.dataset.consumable = on?'1':'0';
+      else if(f.dataset.flag==='flag') tr.dataset.flag = on?'1':'0';
+      updateSummary(r.totals);
     }catch(e){
       f.classList.toggle('on', !on);
+    }finally{
       delete f.dataset.busy;
     }
   };
@@ -145,8 +167,14 @@ modal.addEventListener('click', e=>{
 document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeModal(); closeShare(); } });
 
 modal.querySelectorAll('.toggle input').forEach(inp=>
-  inp.addEventListener('change', ()=>
-    inp.closest('.toggle').classList.toggle('on', inp.checked)));
+  inp.addEventListener('change', ()=>{
+    inp.closest('.toggle').classList.toggle('on', inp.checked);
+    // worn and consumable are mutually exclusive
+    if(inp.checked){
+      if(inp===tWear.querySelector('input')) setToggle(tCons,false);
+      else if(inp===tCons.querySelector('input')) setToggle(tWear,false);
+    }
+  }));
 
 modal.querySelectorAll('.step').forEach(btn=>
   btn.addEventListener('click', ()=>{

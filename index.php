@@ -193,7 +193,7 @@ const PL = {
   listName: <?= json_encode($data['name'] ?? '') ?>
 };
 </script>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=4"></script>
 
 </body>
 </html>

@@ -167,8 +167,14 @@ function item_update(int $id, array $f): void
 function item_set_flag(int $id, string $flag, int $val): void
 {
     if (!in_array($flag, ['worn', 'consumable', 'flag'], true)) return;
-    $s = db()->prepare("UPDATE items SET $flag = ? WHERE id = ?");
-    $s->execute([$val ? 1 : 0, $id]);
+    // worn and consumable are mutually exclusive: turning one on clears the other
+    if ($val && $flag === 'worn') {
+        db()->prepare('UPDATE items SET worn = 1, consumable = 0 WHERE id = ?')->execute([$id]);
+    } elseif ($val && $flag === 'consumable') {
+        db()->prepare('UPDATE items SET consumable = 1, worn = 0 WHERE id = ?')->execute([$id]);
+    } else {
+        db()->prepare("UPDATE items SET $flag = ? WHERE id = ?")->execute([$val ? 1 : 0, $id]);
+    }
 }
 
 function item_delete(int $id): void
@@ -257,6 +263,14 @@ function item_owner(int $itemId): ?int
     $s->execute([$itemId]);
     $r = $s->fetch();
     return $r ? (int) $r['user_id'] : null;
+}
+
+function item_list_id(int $itemId): ?int
+{
+    $s = db()->prepare('SELECT c.list_id FROM items i JOIN categories c ON c.id = i.category_id WHERE i.id = ?');
+    $s->execute([$itemId]);
+    $r = $s->fetch();
+    return $r ? (int) $r['list_id'] : null;
 }
 
 function share_url(string $token): string
