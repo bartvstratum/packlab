@@ -47,6 +47,9 @@ header{
 .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px}
 .brand .brand-logo{color:var(--accent);font-size:28px;flex:none}
 .brand span.name{letter-spacing:-.3px}
+.brand-gh{display:inline-flex;align-items:center;color:#8fb2f7;margin-left:1px}
+.brand-gh:hover{color:var(--accent)}
+.brand-gh svg{width:18px;height:18px;fill:currentColor;display:block}
 .spacer{flex:1}
 .icon-btn{
   display:inline-flex;align-items:center;justify-content:center;
