@@ -1,2 +1,2 @@
-# featherpack
+# PackLab
 Back/bike packing list
