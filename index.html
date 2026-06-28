@@ -24,7 +24,7 @@
   --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.10);
   --radius:12px;
   /* category accent colors */
-  --c1:#7c9cff; --c2:#f08fb0; --c3:#9b8cff; --c4:#5bb3a9; --c5:#f6a35c; --c6:#74c47d;
+  --c1:#7c9cff; --c2:#f08fb0; --c3:#9b8cff; --c4:#5bb3a9; --c5:#f6a35c; --c6:#74c47d; --c7:#f6c453; --c8:#6cc2d6;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -83,7 +83,7 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 120px}
 /* summary bar */
 .summary{
   display:flex;align-items:stretch;gap:8px;
-  margin-bottom:18px;
+  margin-bottom:14px;
 }
 .summary .stat{flex:1 1 0;min-width:0}
 .op-sep{
@@ -92,7 +92,7 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 120px}
 }
 .stat{
   background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);
+  border-radius:var(--radius);padding:10px 13px;box-shadow:var(--shadow);
 }
 .stat .k{font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:5px}
 .stat .k .material-symbols-rounded{font-size:16px}
@@ -110,11 +110,11 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 120px}
   border:1px solid var(--border);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  margin-bottom:14px;overflow:hidden;
+  margin-bottom:10px;overflow:hidden;
 }
 .cat-head{
   display:flex;align-items:center;gap:10px;
-  padding:12px 14px;cursor:pointer;
+  padding:9px 14px;cursor:pointer;
   border-left:4px solid var(--cat,#ccc);
 }
 .cat-head .chev{color:var(--muted);transition:transform .15s}
@@ -145,12 +145,12 @@ th.right,td.right{text-align:right}
 /* Item column takes all slack; right-side columns shrink to content */
 thead th:first-child,tbody td.col-item{width:100%}
 thead th:not(:first-child),tbody td:not(.col-item){white-space:nowrap}
-tbody td{padding:10px;border-bottom:1px solid var(--border);vertical-align:middle}
+tbody td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover{background:#fafbfc}
-.col-item{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.item-name,.item-desc{display:inline}
 .item-name{font-weight:600}
-.item-desc{font-size:13px;color:var(--muted)}
+.item-desc{font-size:13px;color:var(--muted);margin-left:7px}
 .num{font-variant-numeric:tabular-nums;white-space:nowrap}
 /* mobile-only inline labels — hidden on desktop where Weight/Qty have columns */
 .mlabel{display:none}
@@ -159,7 +159,7 @@ tbody tr:hover{background:#fafbfc}
 .flags{display:flex;gap:6px;justify-content:center}
 .flag{
   display:inline-flex;align-items:center;justify-content:center;
-  width:26px;height:26px;border-radius:7px;
+  width:24px;height:24px;border-radius:7px;
   background:var(--bg);color:#c2c7cf;border:1px solid var(--border);
 }
 .flag .material-symbols-rounded{font-size:17px}
@@ -174,8 +174,8 @@ tbody tr:hover{background:#fafbfc}
 
 .row-actions{display:flex;gap:2px;justify-content:flex-end;opacity:.55}
 tbody tr:hover .row-actions{opacity:1}
-.mini-btn{width:30px;height:30px}
-.mini-btn .material-symbols-rounded{font-size:19px}
+.mini-btn{width:28px;height:28px}
+.mini-btn .material-symbols-rounded{font-size:18px}
 
 /* add category */
 .add-cat{
@@ -332,65 +332,59 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   <section class="summary">
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">inventory_2</span>Base weight</div>
-      <div class="v">5,190 <small>g</small><span class="pct">62%</span></div>
+      <div class="v">6,431 <small>g</small><span class="pct">54%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">+</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">restaurant</span>Consumable</div>
-      <div class="v">2,050 <small>g</small><span class="pct">24%</span></div>
+      <div class="v">3,810 <small>g</small><span class="pct">32%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">=</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">backpack</span>Pack weight</div>
-      <div class="v">7,240 <small>g</small><span class="pct">86%</span></div>
+      <div class="v">10,241 <small>g</small><span class="pct">86%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">+</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">checkroom</span>Worn</div>
-      <div class="v">1,180 <small>g</small><span class="pct">14%</span></div>
+      <div class="v">1,722 <small>g</small><span class="pct">14%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">=</div>
     <div class="stat">
       <div class="k"><span class="material-symbols-rounded">scale</span>Total</div>
-      <div class="v">8,420 <small>g</small><span class="pct">100%</span></div>
+      <div class="v">11,963 <small>g</small><span class="pct">100%</span></div>
     </div>
   </section>
 
-  <!-- ===== Category: Shelter & Sleep ===== -->
+  <!-- ===== Category: Shelter and sleep ===== -->
   <section class="category" style="--cat:var(--c1)">
     <div class="cat-head">
       <span class="material-symbols-rounded chev">expand_more</span>
       <span class="cat-dot"></span>
-      <span class="cat-title">Shelter &amp; Sleep</span>
+      <span class="cat-title">Shelter and sleep</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>3</b> items · <b>2,310</b> g</span>
+      <span class="cat-meta"><b>4</b> items · <b>1,686</b> g</span>
     </div>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr>
-            <th>Item</th>
-            <th class="center">Flags</th>
-            <th class="right">Weight</th>
-            <th class="center">Qty</th>
-            <th></th>
-          </tr>
+          <tr><th>Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><th></th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="col-item">
-              <div class="item-name">Zpacks Duplex Tent</div>
-              <div class="item-desc">DCF trekking-pole shelter, stakes incl.</div>
+              <div class="item-name">Tent</div>
+              <div class="item-desc">Bonfus Duos 2p</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
                 <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
                 <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>540 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>681 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">540 g</td>
+            <td class="right num col-hide-m">681 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -399,18 +393,18 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Sleeping Quilt 10°F</div>
-              <div class="item-desc">850-fill down, regular/wide</div>
+              <div class="item-name">Down quilt</div>
+              <div class="item-desc">Therm-a-Rest Vesper 32</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
                 <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
                 <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>770 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>510 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">770 g</td>
+            <td class="right num col-hide-m">510 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -419,19 +413,39 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Inflatable Sleeping Pad</div>
-              <div class="item-desc">R-value 4.2, wide mummy</div>
+              <div class="item-name">Sleeping pad</div>
+              <div class="item-desc">Therm-a-Rest Neoair Xlite NXT</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
                 <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
                 <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>1,000 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>385 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">1,000 g</td>
+            <td class="right num col-hide-m">385 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Tent pegs</div>
+              <div class="item-desc">Hilleberg Y-peg (8) / MSR groundhog (2)</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>11 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×10</span>
+            </td>
+            <td class="right num col-hide-m">11 g</td>
+            <td class="center col-hide-m"><span class="qty">10</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
               <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
@@ -449,30 +463,28 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Clothes</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>3</b> items · <b>1,180</b> g</span>
+      <span class="cat-meta"><b>16</b> items · <b>2,658</b> g</span>
     </div>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr>
-            <th>Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><th></th>
-          </tr>
+          <tr><th>Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><th></th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="col-item">
-              <div class="item-name">Rain Jacket</div>
-              <div class="item-desc">3-layer hardshell, pit zips</div>
+              <div class="item-name">Shoes</div>
+              <div class="item-desc">Hoka Speedgoat 6 size 46.66666 + Superfeet insoles</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
                 <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
                 <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>290 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>766 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">290 g</td>
+            <td class="right num col-hide-m">766 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -481,38 +493,298 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Merino Base Layer</div>
-              <div class="item-desc">200gsm long sleeve</div>
-            </td>
-            <td class="center col-meta">
-              <div class="flags">
-                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
-              </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>210 g</span>
-              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
-            </td>
-            <td class="right num col-hide-m">210 g</td>
-            <td class="center col-hide-m"><span class="qty">1</span></td>
-            <td><div class="row-actions">
-              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
-              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
-            </div></td>
-          </tr>
-          <tr>
-            <td class="col-item">
-              <div class="item-name">Down Puffy</div>
-              <div class="item-desc">800-fill hooded jacket</div>
+              <div class="item-name">Rain/wind jacket</div>
+              <div class="item-desc">TBD</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
                 <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
                 <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>340 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>200 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">340 g</td>
+            <td class="right num col-hide-m">200 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Puppy coat 🐕</div>
+              <div class="item-desc">Haglofs L.I.M. Down Hood</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>255 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">255 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Fleece sweater</div>
+              <div class="item-desc">TBD, DIY?</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>190 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">190 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Legging</div>
+              <div class="item-desc">Icebreaker 200 Oasis merino</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>183 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">183 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Rain pants</div>
+              <div class="item-desc">Ultra Direction Ultra pants</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>133 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">133 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Camp sandals</div>
+              <div class="item-desc">DIY, 1.8mm Nora Astral + 3mm EV foam + paracord</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>126 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">126 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">T-shirt camp/sleep</div>
+              <div class="item-desc">Icebreaker Merino 125 Cool-Lite Sphere III SS Tee</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>126 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">126 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">T-shirt hiking</div>
+              <div class="item-desc">Under Armour 2.0 TEE - Sport T-shirt</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>120 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">120 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Shorts hike/camp/swim</div>
+              <div class="item-desc">Nike Stride Dry-Fit</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>112 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×2</span>
+            </td>
+            <td class="right num col-hide-m">112 g</td>
+            <td class="center col-hide-m"><span class="qty">2</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Underwear</div>
+              <div class="item-desc">Icebreaker Anatomica Boxers</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>73 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">73 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Socks long</div>
+              <div class="item-desc">STOX hiking</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>54 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">54 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Short socks</div>
+              <div class="item-desc">Darn tough low run</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>42 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×3</span>
+            </td>
+            <td class="right num col-hide-m">42 g</td>
+            <td class="center col-hide-m"><span class="qty">3</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Sun protection</div>
+              <div class="item-desc">Buff Coolnet UV+</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>37 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">37 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Sunglasses</div>
+              <div class="item-desc">Oakley Radar EV Path</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>30 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">30 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Sleeping mask</div>
+              <div class="item-desc">DIY, stretchy fabric</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>15 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">15 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -531,7 +803,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Electronics</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>2</b> items · <b>430</b> g</span>
+      <span class="cat-meta"><b>12</b> items · <b>1,335</b> g</span>
     </div>
     <div class="table-wrap">
       <table>
@@ -541,18 +813,18 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
         <tbody>
           <tr>
             <td class="col-item">
-              <div class="item-name">Power Bank 10,000mAh</div>
-              <div class="item-desc">USB-C PD, with cable</div>
+              <div class="item-name">Camera</div>
+              <div class="item-desc">Canon G7X mark III</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>210 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>315 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">210 g</td>
+            <td class="right num col-hide-m">315 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -561,18 +833,218 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Headlamp</div>
-              <div class="item-desc">Rechargeable, 400 lumens</div>
+              <div class="item-name">Power bank</div>
+              <div class="item-desc">Anker Nano Power Bank 10 Ah</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>90 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>218 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">90 g</td>
+            <td class="right num col-hide-m">218 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Phone</div>
+              <div class="item-desc">iPhone 17 + protective case</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>208 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">208 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">E-reader</div>
+              <div class="item-desc">Kobo Clara HD color + DIY cover</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>190 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">190 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Satellite messenger</div>
+              <div class="item-desc">Garmin inReach Messenger</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>115 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">115 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Sleeping pad pump</div>
+              <div class="item-desc">Flextail zero + fittings</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>61 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">61 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">USB wall charger</div>
+              <div class="item-desc">XTorm 35W GaN2 Ultra</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>57 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">57 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Watch / GPS</div>
+              <div class="item-desc">Garmin Forerunner 965</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>54 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">54 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Head phones</div>
+              <div class="item-desc">Apple AirPods 4</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>43 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">43 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Head light</div>
+              <div class="item-desc">Nitecore NU 25 UL</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>40 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">40 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">USB cables</div>
+              <div class="item-desc">USB-C + Garmin watch</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>22 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">22 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Air tags</div>
+              <div class="item-desc">Apple Air Tag 2.0</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>12 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">12 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -591,7 +1063,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
       <span class="cat-dot"></span>
       <span class="cat-title">Pack</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>2</b> items · <b>1,050</b> g</span>
+      <span class="cat-meta"><b>8</b> items · <b>1,021</b> g</span>
     </div>
     <div class="table-wrap">
       <table>
@@ -601,18 +1073,18 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
         <tbody>
           <tr>
             <td class="col-item">
-              <div class="item-name">55L Backpack</div>
-              <div class="item-desc">Frameless UL, roll-top</div>
+              <div class="item-name">Backpack</div>
+              <div class="item-desc">Bonfus Framus 58 L</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>880 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>765 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">880 g</td>
+            <td class="right num col-hide-m">765 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -621,18 +1093,138 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Dry Bag Set</div>
-              <div class="item-desc">3 sizes, roll-top</div>
+              <div class="item-name">Hip belt pockets</div>
+              <div class="item-desc">DIY, Ultra 200x (133 g/m2)</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>170 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>35 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×2</span>
+            </td>
+            <td class="right num col-hide-m">35 g</td>
+            <td class="center col-hide-m"><span class="qty">2</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Food bag</div>
+              <div class="item-desc">DIY, DCF (34 g/m2)</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>28 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">170 g</td>
+            <td class="right num col-hide-m">28 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Packing cube L</div>
+              <div class="item-desc">DIY, DCF (34 g/m2)</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>26 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×2</span>
+            </td>
+            <td class="right num col-hide-m">26 g</td>
+            <td class="center col-hide-m"><span class="qty">2</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Tote bag</div>
+              <div class="item-desc">DIY, DCF (25 g/m2)</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>25 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">25 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Shoulder strap pocket</div>
+              <div class="item-desc">DIY, stretchy mesh</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>21 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×2</span>
+            </td>
+            <td class="right num col-hide-m">21 g</td>
+            <td class="center col-hide-m"><span class="qty">2</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Purse</div>
+              <div class="item-desc">DIY, DCF (25+34 g/m2)</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>20 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">20 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Stuff sack quilt</div>
+              <div class="item-desc">DIY, DCF (25 g/m2)</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>19 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">19 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -644,14 +1236,14 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     </div>
   </section>
 
-  <!-- ===== Category: Cooking ===== -->
+  <!-- ===== Category: Misc ===== -->
   <section class="category" style="--cat:var(--c5)">
     <div class="cat-head">
       <span class="material-symbols-rounded chev">expand_more</span>
       <span class="cat-dot"></span>
-      <span class="cat-title">Cooking</span>
+      <span class="cat-title">Misc</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>3</b> items · <b>2,360</b> g</span>
+      <span class="cat-meta"><b>14</b> items · <b>749</b> g</span>
     </div>
     <div class="table-wrap">
       <table>
@@ -661,13 +1253,33 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
         <tbody>
           <tr>
             <td class="col-item">
-              <div class="item-name">Canister Stove</div>
-              <div class="item-desc">Titanium, piezo ignition</div>
+              <div class="item-name">Hiking poles</div>
+              <div class="item-desc">Black Diamond Distance Carbon FLZ 125-140 cm</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag on wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>365 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">365 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Water filter</div>
+              <div class="item-desc">Replace</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
               <span class="mlabel num"><span class="material-symbols-rounded">scale</span>60 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
@@ -681,13 +1293,273 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Titanium Pot 750ml</div>
-              <div class="item-desc">With lid + folding spork</div>
+              <div class="item-name">Small stuff</div>
+              <div class="item-desc">Passport, keys, ...</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>60 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">60 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Main towel</div>
+              <div class="item-desc">PackTowl hand (42x92 cm) -&gt; cut to 42x60 cm... SMALLER</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>40 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">40 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Water bottle</div>
+              <div class="item-desc">HydraPak 0.5 L</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>44 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">44 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Water bottle</div>
+              <div class="item-desc">Random, 1 L</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>37.5 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">37.5 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Water bottle</div>
+              <div class="item-desc">Random, 0.6 L</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>32.5 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">32.5 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Repair kit</div>
+              <div class="item-desc">Repair kit tent/pad/clothes/...</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>32 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">32 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Pocket knife</div>
+              <div class="item-desc">Opinel No 6</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>26 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">26 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Swiss army knife</div>
+              <div class="item-desc">Victorinox Classic SD</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>21 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">21 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Mini towl</div>
+              <div class="item-desc">Nomadic mini towl</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>12 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">12 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Spare cord</div>
+              <div class="item-desc">Wash line, guy line, etc, 4m 1.5 mm DCF</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>7 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">7 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Whistle</div>
+              <div class="item-desc">Random</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>7 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">7 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Mini compass</div>
+              <div class="item-desc">Suunto Clipper</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>5 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">5 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== Category: Personal care ===== -->
+  <section class="category" style="--cat:var(--c6)">
+    <div class="cat-head">
+      <span class="material-symbols-rounded chev">expand_more</span>
+      <span class="cat-dot"></span>
+      <span class="cat-title">Personal care</span>
+      <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
+      <span class="cat-meta"><b>6</b> items · <b>477</b> g</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Toiletry bag</div>
+              <div class="item-desc">Soap, tooth brush/paste + DIY DCF bag</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
               <span class="mlabel num"><span class="material-symbols-rounded">scale</span>150 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
@@ -701,18 +1573,98 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Food (3 days)</div>
-              <div class="item-desc">~2,200 kcal/day</div>
+              <div class="item-name">First aid</div>
+              <div class="item-desc">First aid + medicine +DIY DCF bag</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag on cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>2,150 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>150 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">2,150 g</td>
+            <td class="right num col-hide-m">150 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Sun screen</div>
+              <div class="item-desc">Random SPF50, 40 ml</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>50 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">50 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">NSAID gel</div>
+              <div class="item-desc">Voltaren 2.32%, 30 ml</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>37 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">37 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Insect/tick spray</div>
+              <div class="item-desc">Random, 50% DEET</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>50 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">50 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Toilet kit</div>
+              <div class="item-desc">toilet paper, ...</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>40 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">40 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -724,14 +1676,14 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     </div>
   </section>
 
-  <!-- ===== Category: Misc ===== -->
-  <section class="category" style="--cat:var(--c6)">
+  <!-- ===== Category: Cooking ===== -->
+  <section class="category" style="--cat:var(--c7)">
     <div class="cat-head">
       <span class="material-symbols-rounded chev">expand_more</span>
       <span class="cat-dot"></span>
-      <span class="cat-title">Misc</span>
+      <span class="cat-title">Cooking</span>
       <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
-      <span class="cat-meta"><b>2</b> items · <b>1,090</b> g</span>
+      <span class="cat-meta"><b>6</b> items · <b>227</b> g</span>
     </div>
     <div class="table-wrap">
       <table>
@@ -741,18 +1693,18 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
         <tbody>
           <tr>
             <td class="col-item">
-              <div class="item-name">First Aid Kit</div>
-              <div class="item-desc">Blister care, meds, tape</div>
+              <div class="item-name">Cooking pot</div>
+              <div class="item-desc">Toaks titanium 650 ml + lid + DIY DCF bag</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>140 g</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>80 g</span>
               <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">140 g</td>
+            <td class="right num col-hide-m">80 g</td>
             <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
@@ -761,19 +1713,179 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
           </tr>
           <tr>
             <td class="col-item">
-              <div class="item-name">Water Filter + Bottles</div>
-              <div class="item-desc">Squeeze filter, 2×1L</div>
+              <div class="item-name">Pot stand / wind screen</div>
+              <div class="item-desc">Toaks TiStand without stakes</div>
             </td>
             <td class="center col-meta">
               <div class="flags">
-                <span class="flag wear"><span class="material-symbols-rounded">checkroom</span></span>
-                <span class="flag cons"><span class="material-symbols-rounded">restaurant</span></span>
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
               </div>
-              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>950 g</span>
-              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×2</span>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>50 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
             </td>
-            <td class="right num col-hide-m">950 g</td>
-            <td class="center col-hide-m"><span class="qty">2</span></td>
+            <td class="right num col-hide-m">50 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Burner</div>
+              <div class="item-desc">Toaks titanium siphon alcohol stove</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>20 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">20 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Small stuff</div>
+              <div class="item-desc">Cutlery, lighters, ...</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>45 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">45 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Cutting board</div>
+              <div class="item-desc">DIY, 1 mm Polyethylene</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>32 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">32 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Fuel bottle</div>
+              <div class="item-desc">???</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>0 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">0 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== Category: Consumables ===== -->
+  <section class="category" style="--cat:var(--c8)">
+    <div class="cat-head">
+      <span class="material-symbols-rounded chev">expand_more</span>
+      <span class="cat-dot"></span>
+      <span class="cat-title">Consumables</span>
+      <button class="cat-add" title="Add item"><span class="material-symbols-rounded">add</span><span class="lbl">Add item</span></button>
+      <span class="cat-meta"><b>3</b> items · <b>3,810</b> g</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Food</div>
+              <div class="item-desc">1-2 day&#x27;s worth of food (typical)</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag on cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>2,000 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">2,000 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Water</div>
+              <div class="item-desc">1L bottle + 0.5L on shoulder strap</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag on cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>1,500 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">1,500 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
+            <td><div class="row-actions">
+              <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
+              <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="col-item">
+              <div class="item-name">Condiments</div>
+              <div class="item-desc">Olive oil, salt, Tabasco, stock cubes, ...</div>
+            </td>
+            <td class="center col-meta">
+              <div class="flags">
+                <span class="flag wear" title="Worn"><span class="material-symbols-rounded">checkroom</span></span>
+                <span class="flag on cons" title="Consumable"><span class="material-symbols-rounded">restaurant</span></span>
+              </div>
+              <span class="mlabel num"><span class="material-symbols-rounded">scale</span>310 g</span>
+              <span class="mlabel"><span class="material-symbols-rounded">tag</span>×1</span>
+            </td>
+            <td class="right num col-hide-m">310 g</td>
+            <td class="center col-hide-m"><span class="qty">1</span></td>
             <td><div class="row-actions">
               <button class="icon-btn mini-btn" title="Edit"><span class="material-symbols-rounded">edit</span></button>
               <button class="icon-btn mini-btn" title="Delete"><span class="material-symbols-rounded">delete</span></button>
@@ -803,28 +1915,30 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     <div class="modal-body">
       <div class="field">
         <label for="f-name">Name</label>
-        <input type="text" id="f-name" placeholder="e.g. Zpacks Duplex Tent" value="Zpacks Duplex Tent">
+        <input type="text" id="f-name" placeholder="e.g. Tent" value="Tent">
       </div>
       <div class="field">
         <label for="f-desc">Description</label>
-        <textarea id="f-desc" placeholder="Optional notes">DCF trekking-pole shelter, stakes incl.</textarea>
+        <textarea id="f-desc" placeholder="Optional notes">Bonfus Duos 2p</textarea>
       </div>
       <div class="field">
         <label for="f-cat">Category</label>
         <select id="f-cat">
-          <option>Shelter &amp; Sleep</option>
+          <option>Shelter and sleep</option>
           <option>Clothes</option>
           <option>Electronics</option>
           <option>Pack</option>
-          <option>Cooking</option>
           <option>Misc</option>
+          <option>Personal care</option>
+          <option>Cooking</option>
+          <option>Consumables</option>
         </select>
       </div>
       <div class="row2">
         <div class="field">
           <label for="f-weight">Weight</label>
           <div class="input-suffix">
-            <input type="number" id="f-weight" inputmode="decimal" min="0" step="1" value="540">
+            <input type="number" id="f-weight" inputmode="decimal" min="0" step="1" value="681">
             <span class="unit">g</span>
           </div>
         </div>
