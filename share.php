@@ -16,7 +16,7 @@ $data = $list ? list_full((int) $list['id']) : null;
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= $data ? h($data['name']) . ' — PackLab' : 'PackLab' ?></title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<meta name="theme-color" content="#2f8f5b">
+<meta name="theme-color" content="#2563eb">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
