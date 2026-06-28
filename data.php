@@ -226,3 +226,32 @@ function list_full(int $listId): ?array
     $list['totals'] = $tot;
     return $list;
 }
+
+function item_get(int $id): ?array
+{
+    $s = db()->prepare('SELECT * FROM items WHERE id = ?');
+    $s->execute([$id]);
+    return $s->fetch() ?: null;
+}
+
+function owns_list(int $uid, int $listId): bool
+{
+    $l = list_get($listId);
+    return $l && (int) $l['user_id'] === $uid;
+}
+
+function category_owner(int $catId): ?int
+{
+    $s = db()->prepare('SELECT l.user_id FROM categories c JOIN lists l ON l.id = c.list_id WHERE c.id = ?');
+    $s->execute([$catId]);
+    $r = $s->fetch();
+    return $r ? (int) $r['user_id'] : null;
+}
+
+function item_owner(int $itemId): ?int
+{
+    $s = db()->prepare('SELECT l.user_id FROM items i JOIN categories c ON c.id = i.category_id JOIN lists l ON l.id = c.list_id WHERE i.id = ?');
+    $s->execute([$itemId]);
+    $r = $s->fetch();
+    return $r ? (int) $r['user_id'] : null;
+}
