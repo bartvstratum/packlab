@@ -1,17 +1,14 @@
-# PackLab
+# PackLab - gear list editor
 
-Back/bike packing gear list — a [LighterPack](https://lighterpack.com) alternative.
-
-A hobby project: a reimplementation of LighterPack with (hopefully) fewer bugs,
+Sunday vibe-coding project: a reimplementation of LighterPack with (hopefully) fewer bugs,
 better mobile editing, and a few personal preferences baked in — most notably
-**sane units only** (everything is grams; no ounces/pounds nonsense).
+**sane units only**.
 
-CSV is **two-way compatible** with LighterPack: you can import a LighterPack
-export here and export a file that imports back into LighterPack. On import,
+The CSV files are **two-way compatible** with LighterPack: you can import a LighterPack
+export here and export a file that imports back into LighterPack. However, on import,
 weights in oz/lb/kg are **converted to grams**.
 
-> Most of the code was written by Claude (Anthropic's Claude Code, model
-> Claude Opus 4.8) — a typical Sunday vibe-coding project.
+Most of the code was written by Claude (Anthropic's Claude Code, model Claude Opus 4.8)
 
 ## Run locally
 
@@ -24,9 +21,4 @@ php -S localhost:8000
 
 Then open http://localhost:8000/index.php
 
-The database is created automatically on first run. To load a list from a
-LighterPack-format CSV:
-
-```
-php csv.php import <userId> <file.csv> "List name"
-```
+The database is created automatically on first run.
