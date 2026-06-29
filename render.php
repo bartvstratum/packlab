@@ -111,10 +111,39 @@ function render_big3(array $big3): void {
   </div>
 <?php }
 
-function render_list(array $data, bool $editable): void {
+function render_breakdown(array $cats): void {
+  $rows = array_values(array_filter($cats, fn($c) => (float) $c['weight'] > 0));
+  if (!$rows) return;
+  usort($rows, fn($a, $b) => $b['weight'] <=> $a['weight']);
+  $max = (float) $rows[0]['weight'] ?: 1; ?>
+  <section class="breakdown" id="breakdown">
+    <div class="bd-head">
+      <span class="material-symbols-rounded chev">expand_more</span>
+      <span class="bd-title">Category breakdown</span>
+    </div>
+    <div class="bd-body">
+<?php foreach ($rows as $c): ?>
+      <div class="bd-row">
+        <span class="bd-name"><?= h($c['name']) ?></span>
+        <span class="bd-track"><span class="bd-bar" style="width:<?= round((float) $c['weight'] / $max * 100, 1) ?>%;background:<?= h($c['color'] ?: '#cccccc') ?>"></span></span>
+        <span class="bd-val"><b><?= fmtg0($c['weight']) ?></b> g · <?= $c['pct'] ?>%</span>
+      </div>
+<?php endforeach; ?>
+    </div>
+  </section>
+<?php }
+
+function render_list(array $data, bool $editable): void { ?>
+  <div class="analysis" id="analysis">
+<?php
   render_summary($data['totals']);
-  render_big3($data['big3'] ?? ['items' => []]); ?>
+  render_big3($data['big3'] ?? ['items' => []]);
+  render_breakdown($data['categories']); ?>
+  </div>
   <div class="list-tools">
+    <button class="toggle-all" id="toggleAnalysis" style="margin-right:auto">
+      <span class="material-symbols-rounded">insights</span><span class="lbl">Hide analysis</span>
+    </button>
 <?php if ($editable): ?>
     <button class="toggle-all" id="sortCats" title="Sort categories and all items by weight">
       <span class="material-symbols-rounded">sort</span><span class="lbl">Sort by weight</span>
