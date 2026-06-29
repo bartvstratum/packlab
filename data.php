@@ -16,6 +16,24 @@ function safe_url(?string $url): ?string
     return in_array($scheme, ['http', 'https'], true) ? $url : null;
 }
 
+// Run $fn atomically. Reentrant: a no-op (just runs) if already in a transaction.
+function with_transaction(callable $fn)
+{
+    $pdo = db();
+    if ($pdo->inTransaction()) {
+        return $fn();
+    }
+    $pdo->beginTransaction();
+    try {
+        $result = $fn();
+        $pdo->commit();
+        return $result;
+    } catch (Throwable $e) {
+        $pdo->rollBack();
+        throw $e;
+    }
+}
+
 function next_pos(string $table, string $fk, int $fkVal): int
 {
     $allowed = ['lists' => 'user_id', 'categories' => 'list_id', 'items' => 'category_id'];
@@ -307,9 +325,11 @@ function category_move(int $id, int $dir): void
     if ($swap < 0 || $swap >= count($cats)) return;
     $a = $cats[$pos];
     $b = $cats[$swap];
-    $s = db()->prepare('UPDATE categories SET position = ? WHERE id = ?');
-    $s->execute([(int) $b['position'], (int) $a['id']]);
-    $s->execute([(int) $a['position'], (int) $b['id']]);
+    with_transaction(function () use ($a, $b) {
+        $s = db()->prepare('UPDATE categories SET position = ? WHERE id = ?');
+        $s->execute([(int) $b['position'], (int) $a['id']]);
+        $s->execute([(int) $a['position'], (int) $b['id']]);
+    });
 }
 
 function categories_sort_by_weight(int $listId): void
@@ -325,10 +345,12 @@ function categories_sort_by_weight(int $listId): void
     }
     $ids = array_map(fn($c) => (int) $c['id'], $cats);
     usort($ids, fn($a, $b) => $weight[$b] <=> $weight[$a]);
-    $s = db()->prepare('UPDATE categories SET position = ? WHERE id = ?');
-    foreach ($ids as $i => $id) {
-        $s->execute([$i, $id]);
-    }
+    with_transaction(function () use ($ids) {
+        $s = db()->prepare('UPDATE categories SET position = ? WHERE id = ?');
+        foreach ($ids as $i => $id) {
+            $s->execute([$i, $id]);
+        }
+    });
 }
 
 function category_sort_items_by_weight(int $catId): void
@@ -336,18 +358,22 @@ function category_sort_items_by_weight(int $catId): void
     $items = items_for_category($catId);
     usort($items, fn($a, $b) =>
         ((float) $b['weight'] * (int) $b['qty']) <=> ((float) $a['weight'] * (int) $a['qty']));
-    $s = db()->prepare('UPDATE items SET position = ? WHERE id = ?');
-    foreach ($items as $i => $it) {
-        $s->execute([$i, (int) $it['id']]);
-    }
+    with_transaction(function () use ($items) {
+        $s = db()->prepare('UPDATE items SET position = ? WHERE id = ?');
+        foreach ($items as $i => $it) {
+            $s->execute([$i, (int) $it['id']]);
+        }
+    });
 }
 
 function list_sort_by_weight(int $listId): void
 {
-    categories_sort_by_weight($listId);
-    foreach (categories_for_list($listId) as $c) {
-        category_sort_items_by_weight((int) $c['id']);
-    }
+    with_transaction(function () use ($listId) {
+        categories_sort_by_weight($listId);
+        foreach (categories_for_list($listId) as $c) {
+            category_sort_items_by_weight((int) $c['id']);
+        }
+    });
 }
 
 function user_set_password(int $id, string $password): void
