@@ -1,11 +1,21 @@
 "Item Name",Category,desc,qty,weight,unit,url,price,worn,consumable,flag,big3
-"Fire wood",Cooking,"CO2 neutral to compensate 100'000 km flight.",5,1000,g,,,,1,,
-Pan,Cooking,"Cast iron, easily lasts the entire PCT (and rest of life)",1,2000,g,,,,,,
-Tent,"Big three","Old WWII canvas tent from grandpa",1,6000,g,,,,,,1
-Pack,"Big three","DIY, frameless running-vest style 18 g/m2 DCF. What could go wrong...",1,245,g,,,,,,1
-"Sleeping pad","Big three","1 mm EVA foam",1,100,g,,,,,,1
-"Space blanket","Big three","If its warm enough for satellites, it must be warm enough for me",1,80,g,,,,,,1
-EV,Electronics,"To avoid the road walking. Weight might be in kg instead of g. Unclear, check this before hike",1,2250,g,,,,,1,
-"Olive oil",Food,"8'800 kcal/kg!",1,1000,g,,,,1,,
-Plutonium-239,Food,"80'000'000 kcal!",1,4,g,,,,1,,
-Socks,Clothes,"Last years Christmas gifts",2,100,g,,,1,,,
+"Canvas tent","Shelter & sleep","Grandpa's WWII canvas tent.",1,18000,g,,,,,,1
+"Steel poles & mallet","Shelter & sleep","",1,4000,g,,,,,,
+"King memory-foam mattress","Shelter & sleep","Sleep is non-negotiable.",1,12000,g,,,,,,1
+"Goose-down duvet & pillow","Shelter & sleep","",1,3500,g,,,,,,
+"Steel-frame backpack","Pack","Indestructible. From 1974.",1,3500,g,,,,,,1
+"Wheelbarrow","Pack","For the overflow.",1,9000,g,,,,,1,
+"Cast-iron Dutch oven","Kitchen","Lasts a lifetime.",1,4500,g,,,,,,
+"Two-burner stove","Kitchen","One burner is for quitters.",1,3200,g,,,,,,
+"Propane tank","Kitchen","",1,5000,g,,,,1,,
+"Marble cutting board","Kitchen","Presentation matters.",1,1800,g,,,,,1,
+"Folding camp chair","Comfort","",1,2500,g,,,,,,
+"Folding table","Comfort","",1,4000,g,,,,,,
+"Hardcover novels","Comfort","Campfire reading.",3,600,g,,,,,1,
+"Garden gnome","Comfort","Morale.",1,1500,g,,,,,1,
+"Steel-toe boots","Clothes","",1,1900,g,,,1,,,
+"Waxed wool overcoat","Clothes","",1,2200,g,,,1,,,
+"Crate of beer","Food & drink","Hydration.",1,8000,g,,,,1,,
+"Watermelon","Food & drink","94% water, technically ultralight.",1,4000,g,,,,1,,
+"Plutonium-239","Food & drink","80'000'000 kcal!",1,4,g,,,,1,,
+"Car battery","Electronics","Never run out of charge.",1,11000,g,,,,,1,
