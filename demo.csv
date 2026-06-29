@@ -1,0 +1,11 @@
+"Item Name",Category,desc,qty,weight,unit,url,price,worn,consumable,flag,big3
+"Fire wood",Cooking,"CO2 neutral to compensate 100'000 km flight.",5,1000,g,,,,1,,
+Pan,Cooking,"Cast iron, easily lasts the entire PCT (and rest of life)",1,2000,g,,,,,,
+Tent,"Big three","Old WWII canvas tent from grandpa",1,6000,g,,,,,,1
+Pack,"Big three","DIY, frameless running-vest style 18 g/m2 DCF. What could go wrong...",1,245,g,,,,,,1
+"Sleeping pad","Big three","1 mm EVA foam",1,100,g,,,,,,1
+"Space blanket","Big three","If its warm enough for satellites, it must be warm enough for me",1,80,g,,,,,,1
+EV,Electronics,"To avoid the road walking. Weight might be in kg instead of g. Unclear, check this before hike",1,2250,g,,,,,1,
+"Olive oil",Food,"8'800 kcal/kg!",1,1000,g,,,,1,,
+Plutonium-239,Food,"80'000'000 kcal!",1,4,g,,,,1,,
+Socks,Clothes,"Last years Christmas gifts",2,100,g,,,1,,,

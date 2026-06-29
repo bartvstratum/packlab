@@ -9,11 +9,14 @@ if ($uid === null) {
 }
 
 $user = user_get($uid);
+$isDemo = ($user['email'] ?? '') === 'demo';
 $msg = '';
 $err = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!csrf_check($_POST['csrf'] ?? null)) {
+    if ($isDemo) {
+        $err = 'Password changes are disabled for the demo account.';
+    } elseif (!csrf_check($_POST['csrf'] ?? null)) {
         $err = 'Session expired, please try again.';
     } else {
         $cur  = $_POST['current'] ?? '';
@@ -81,6 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <section class="acct-section">
     <h2>Change password</h2>
+<?php if ($isDemo): ?>
+    <p class="acct-sub">Password changes are disabled for the demo account.</p>
+<?php else: ?>
     <?php if ($msg): ?><div class="acct-msg ok"><?= h($msg) ?></div><?php endif; ?>
     <?php if ($err): ?><div class="acct-msg err"><?= h($err) ?></div><?php endif; ?>
     <form method="post" action="account.php">
@@ -99,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
       <button type="submit" class="btn btn-primary">Update password</button>
     </form>
+<?php endif; ?>
   </section>
 
   <section class="acct-section">

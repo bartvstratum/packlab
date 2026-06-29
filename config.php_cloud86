@@ -1,0 +1,7 @@
+<?php
+
+return [
+    'db_path'  => __DIR__ . '/../data/packlab.db',
+    'base_url' => 'https://packlab.app',
+    'debug'    => false,
+];
