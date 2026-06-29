@@ -32,21 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function h($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Account — PackLab</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<meta name="theme-color" content="#2563eb">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<?php $pageTitle = 'Account — PackLab'; require __DIR__ . '/head.php'; ?>
 <style>
 .acct{max-width:480px;margin:0 auto;padding:18px 16px 60px}
 .acct-id{display:flex;align-items:center;gap:13px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);margin-bottom:16px}

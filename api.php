@@ -91,7 +91,7 @@ try {
             if ($name === '') {
                 throw new RuntimeException('Name is required', 400);
             }
-            $palette = ['#7c9cff', '#f08fb0', '#9b8cff', '#5bb3a9', '#f6a35c', '#74c47d', '#f6c453', '#6cc2d6'];
+            $palette = category_palette();
             $n = count(categories_for_list($listId));
             $id = category_create($listId, $name, $palette[$n % count($palette)]);
             echo json_encode(['ok' => true, 'id' => $id]);

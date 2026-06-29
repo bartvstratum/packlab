@@ -1,6 +1,5 @@
 <?php
 
-function h($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
 function fmtg($w) { $w = round((float) $w, 1); return $w == (int) $w ? number_format($w) : number_format($w, 1); }
 function fmtg0($w) { return number_format(round((float) $w)); }
 

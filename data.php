@@ -7,6 +7,18 @@ function token(int $bytes = 5): string
     return bin2hex(random_bytes($bytes));
 }
 
+// HTML-escape for output
+function h($s): string
+{
+    return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
+}
+
+// Default category accent colors (cycled when creating categories)
+function category_palette(): array
+{
+    return ['#7c9cff', '#f08fb0', '#9b8cff', '#5bb3a9', '#f6a35c', '#74c47d', '#f6c453', '#6cc2d6'];
+}
+
 // Only allow http(s) links; rejects javascript:, data:, etc. (stored-XSS guard)
 function safe_url(?string $url): ?string
 {

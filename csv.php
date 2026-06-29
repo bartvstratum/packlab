@@ -64,7 +64,7 @@ function csv_import(int $userId, string $csv, ?string $listName = null): int
     };
 
     $listId = list_create($userId, $listName ?: 'Imported list');
-    $palette = ['#7c9cff', '#f08fb0', '#9b8cff', '#5bb3a9', '#f6a35c', '#74c47d', '#f6c453', '#6cc2d6'];
+    $palette = category_palette();
     $catIds = [];
     $ci = 0;
 
