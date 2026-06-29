@@ -132,6 +132,9 @@ $data = $listId ? list_full($listId) : null;
           <label class="toggle mark">
             <input type="checkbox"><span class="material-symbols-rounded">flag</span>Flag
           </label>
+          <label class="toggle big3">
+            <input type="checkbox"><span class="material-symbols-rounded">looks_3</span>Big 3
+          </label>
         </div>
       </div>
     </div>
@@ -185,7 +188,7 @@ const PL = {
 };
 </script>
 <script src="collapse.js?v=1"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 
 </body>
 </html>

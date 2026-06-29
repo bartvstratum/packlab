@@ -182,7 +182,7 @@ function items_for_category(int $catId): array
 function item_create(int $catId, array $f): int
 {
     $pos = next_pos('items', 'category_id', $catId);
-    $s = db()->prepare('INSERT INTO items (category_id, name, description, weight, qty, worn, consumable, flag, url, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $s = db()->prepare('INSERT INTO items (category_id, name, description, weight, qty, worn, consumable, flag, big3, url, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     $s->execute([
         $catId,
         $f['name'],
@@ -192,6 +192,7 @@ function item_create(int $catId, array $f): int
         !empty($f['worn']) ? 1 : 0,
         !empty($f['consumable']) ? 1 : 0,
         !empty($f['flag']) ? 1 : 0,
+        !empty($f['big3']) ? 1 : 0,
         safe_url($f['url'] ?? null),
         $pos,
     ]);
@@ -200,7 +201,7 @@ function item_create(int $catId, array $f): int
 
 function item_update(int $id, array $f): void
 {
-    $s = db()->prepare('UPDATE items SET name = ?, description = ?, weight = ?, qty = ?, worn = ?, consumable = ?, flag = ?, url = ? WHERE id = ?');
+    $s = db()->prepare('UPDATE items SET name = ?, description = ?, weight = ?, qty = ?, worn = ?, consumable = ?, flag = ?, big3 = ?, url = ? WHERE id = ?');
     $s->execute([
         $f['name'],
         $f['description'] ?? '',
@@ -209,6 +210,7 @@ function item_update(int $id, array $f): void
         !empty($f['worn']) ? 1 : 0,
         !empty($f['consumable']) ? 1 : 0,
         !empty($f['flag']) ? 1 : 0,
+        !empty($f['big3']) ? 1 : 0,
         safe_url($f['url'] ?? null),
         $id,
     ]);
@@ -247,6 +249,7 @@ function list_full(int $listId): ?array
 
     $cats = categories_for_list($listId);
     $tot = ['base' => 0.0, 'consumable' => 0.0, 'worn' => 0.0, 'pack' => 0.0, 'total' => 0.0];
+    $big3 = ['weight' => 0.0, 'items' => []];
 
     foreach ($cats as &$c) {
         $items = items_for_category((int) $c['id']);
@@ -260,6 +263,10 @@ function list_full(int $listId): ?array
                 $tot['worn'] += (float) $it['weight'] * min((int) $it['qty'], 1);
             } elseif ($it['consumable']) {
                 $tot['consumable'] += $line;
+            }
+            if ($it['big3']) {
+                $big3['weight'] += $line;
+                $big3['items'][] = ['name' => $it['name'], 'weight' => $line];
             }
         }
         unset($it);
@@ -281,8 +288,13 @@ function list_full(int $listId): ?array
     }
     unset($c);
 
+    // Big 3 as a share of base weight (what you actually optimize)
+    usort($big3['items'], fn($a, $b) => $b['weight'] <=> $a['weight']);
+    $big3['pct'] = $tot['base'] > 0 ? (int) round($big3['weight'] / $tot['base'] * 100) : 0;
+
     $list['categories'] = $cats;
     $list['totals'] = $tot;
+    $list['big3'] = $big3;
     return $list;
 }
 

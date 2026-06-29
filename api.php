@@ -25,6 +25,7 @@ $fields_from = function (array $in): array {
         'worn'        => !empty($in['worn']) ? 1 : 0,
         'consumable'  => !empty($in['consumable']) ? 1 : 0,
         'flag'        => !empty($in['flag']) ? 1 : 0,
+        'big3'        => !empty($in['big3']) ? 1 : 0,
         'url'         => trim((string) ($in['url'] ?? '')) ?: null,
     ];
 };

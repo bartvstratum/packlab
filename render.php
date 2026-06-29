@@ -54,12 +54,13 @@ function render_categories(array $cats, bool $editable): void {
         </thead>
         <tbody>
 <?php foreach ($c['items'] as $it): ?>
-          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>" data-flag="<?= (int) $it['flag'] ?>"<?php endif; ?>>
+          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>" data-flag="<?= (int) $it['flag'] ?>" data-big3="<?= (int) $it['big3'] ?>"<?php endif; ?>>
             <td class="col-item">
               <div class="item-name"><?= h($it['name']) ?></div>
 <?php if (($it['description'] ?? '') !== ''): ?>
               <div class="item-desc"><?= h($it['description']) ?></div>
 <?php endif; ?>
+<?php if ($it['big3']): ?><span class="big3-badge material-symbols-rounded" title="Big 3 item">looks_3</span><?php endif; ?>
 <?php if (($itUrl = safe_url($it['url'] ?? null)) !== null): ?>
               <a class="item-link" href="<?= h($itUrl) ?>" target="_blank" rel="noopener" title="Open link"><span class="material-symbols-rounded">open_in_new</span></a>
 <?php endif; ?>
@@ -91,8 +92,28 @@ function render_categories(array $cats, bool $editable): void {
 <?php endforeach;
 }
 
+function render_big3(array $big3): void {
+  if (empty($big3['items'])) return;
+  $items = $big3['items']; // sorted heaviest-first in list_full
+  $shown = array_slice($items, 0, 4);
+  $rest  = array_slice($items, 4);
+  $parts = [];
+  foreach ($shown as $it) {
+    $parts[] = h($it['name']) . ' ' . fmtg0($it['weight']);
+  }
+  if ($rest) {
+    $parts[] = 'rest ' . fmtg0(array_sum(array_column($rest, 'weight')));
+  } ?>
+  <div class="big3">
+    <span class="big3-tag"><span class="material-symbols-rounded">looks_3</span>Big 3</span>
+    <span class="big3-val"><b><?= fmtg0($big3['weight']) ?></b> g · <b><?= $big3['pct'] ?>%</b> of base</span>
+    <span class="big3-items"><?= implode(' · ', $parts) ?></span>
+  </div>
+<?php }
+
 function render_list(array $data, bool $editable): void {
-  render_summary($data['totals']); ?>
+  render_summary($data['totals']);
+  render_big3($data['big3'] ?? ['items' => []]); ?>
   <div class="list-tools">
 <?php if ($editable): ?>
     <button class="toggle-all" id="sortCats" title="Sort categories and all items by weight">
