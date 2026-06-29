@@ -123,12 +123,22 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 120px}
 .breakdown.collapsed .chev{transform:rotate(-90deg)}
 .breakdown.collapsed .bd-body{display:none}
 .bd-title{font-weight:600;font-size:14px}
-.bd-body{padding:2px 14px 12px}
-.bd-row{display:flex;align-items:center;gap:10px;padding:3px 0;font-size:13px}
-.bd-name{flex:0 0 36%;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bd-track{flex:1;height:13px;background:var(--bg);border-radius:5px;overflow:hidden}
-.bd-bar{display:block;height:100%;border-radius:5px;min-width:3px}
-.bd-val{flex:none;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bd-body{display:grid;grid-template-columns:minmax(0,max-content) 1fr auto;align-items:center;gap:3px 10px;padding:4px 14px 10px;font-size:12px}
+.bd-row{display:contents}
+.bd-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd-sub{color:var(--muted)}
+/* cumulative chart gets a leading rank-number column */
+#cumulative .bd-body{grid-template-columns:auto minmax(0,max-content) 1fr auto}
+.bd-num{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.bd-track{position:relative;height:9px;background:var(--bg);border-radius:4px;overflow:hidden}
+.bd-bar{display:block;height:100%;border-radius:4px;min-width:3px}
+/* quartile gridlines at 25/50/75% only (no edge lines, to avoid corner artifacts) */
+.bd-track::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to right,
+    transparent calc(25% - 1px),rgba(0,0,0,.3) calc(25% - 1px) 25%,transparent 25%,
+    transparent calc(50% - 1px),rgba(0,0,0,.3) calc(50% - 1px) 50%,transparent 50%,
+    transparent calc(75% - 1px),rgba(0,0,0,.3) calc(75% - 1px) 75%,transparent 75%)}
+.bd-val{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
 .bd-val b{color:var(--text);font-weight:600}
 
 /* ---------- Category ---------- */

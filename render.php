@@ -116,7 +116,7 @@ function render_breakdown(array $cats): void {
   if (!$rows) return;
   usort($rows, fn($a, $b) => $b['weight'] <=> $a['weight']);
   $max = (float) $rows[0]['weight'] ?: 1; ?>
-  <section class="breakdown" id="breakdown">
+  <section class="breakdown collapsed" id="breakdown">
     <div class="bd-head">
       <span class="material-symbols-rounded chev">expand_more</span>
       <span class="bd-title">Category breakdown</span>
@@ -133,11 +133,64 @@ function render_breakdown(array $cats): void {
   </section>
 <?php }
 
+// Sample a value t in [0,1] on the ColorBrewer RdYlBu ramp (red -> blue), returns #rrggbb.
+function color_scale(float $t): string {
+  $t = max(0.0, min(1.0, $t));
+  $stops = [
+    [0xa5,0x00,0x26], [0xd7,0x30,0x27], [0xf4,0x6d,0x43], [0xfd,0xae,0x61],
+    [0xfe,0xe0,0x90], [0xff,0xff,0xbf], [0xe0,0xf3,0xf8], [0xab,0xd9,0xe9],
+    [0x74,0xad,0xd1], [0x45,0x75,0xb4], [0x31,0x36,0x95],
+  ];
+  $n = count($stops) - 1;
+  $x = $t * $n;
+  $i = min($n - 1, (int) floor($x));
+  $f = $x - $i;
+  [$ar, $ag, $ab] = $stops[$i];
+  [$br, $bg, $bb] = $stops[$i + 1];
+  return sprintf('#%02x%02x%02x',
+    (int) round($ar + ($br - $ar) * $f),
+    (int) round($ag + ($bg - $ag) * $f),
+    (int) round($ab + ($bb - $ab) * $f));
+}
+
+// Cumulative weight of every item (ignoring categories), heaviest first.
+// Each bar is the running % of total, so it climbs to 100% — big jumps at the
+// top, a long flat tail at the bottom.
+function render_cumulative(array $cats, float $total): void {
+  $items = [];
+  foreach ($cats as $c) {
+    foreach ($c['items'] as $it) {
+      $lw = (float) ($it['line_weight'] ?? (float) $it['weight'] * (int) $it['qty']);
+      if ($lw > 0) $items[] = ['name' => $it['name'], 'w' => $lw];
+    }
+  }
+  if (!$items) return;
+  usort($items, fn($a, $b) => $b['w'] <=> $a['w']);
+  $total = $total ?: array_sum(array_column($items, 'w')); ?>
+  <section class="breakdown collapsed" id="cumulative">
+    <div class="bd-head">
+      <span class="material-symbols-rounded chev">expand_more</span>
+      <span class="bd-title">Cumulative weight</span>
+    </div>
+    <div class="bd-body">
+<?php $run = 0.0; foreach ($items as $idx => $it): $run += $it['w']; $pct = $total > 0 ? $run / $total * 100 : 0; ?>
+      <div class="bd-row">
+        <span class="bd-num"><?= $idx + 1 ?></span>
+        <span class="bd-name"><?= h($it['name']) ?> <span class="bd-sub">(<?= fmtg0($it['w']) ?> g)</span></span>
+        <span class="bd-track"><span class="bd-bar" style="width:<?= round($pct, 1) ?>%;background:<?= color_scale($run / $total) ?>"></span></span>
+        <span class="bd-val"><?= round($pct) ?>%</span>
+      </div>
+<?php endforeach; ?>
+    </div>
+  </section>
+<?php }
+
 function render_list(array $data, bool $editable): void { ?>
   <div class="analysis" id="analysis">
 <?php
   render_summary($data['totals']);
   render_big3($data['big3'] ?? ['items' => []]);
+  render_cumulative($data['categories'], (float) ($data['totals']['total'] ?? 0));
   render_breakdown($data['categories']); ?>
   </div>
   <div class="list-tools">

@@ -22,15 +22,16 @@
     syncToggleAll();
   });
 
-  // Category breakdown chart: collapse on its own (persisted)
-  const breakdown = document.getElementById('breakdown');
-  if(breakdown){
-    if(localStorage.getItem('pl_breakdown_collapsed')==='1') breakdown.classList.add('collapsed');
-    breakdown.querySelector('.bd-head').addEventListener('click', ()=>{
-      breakdown.classList.toggle('collapsed');
-      localStorage.setItem('pl_breakdown_collapsed', breakdown.classList.contains('collapsed')?'1':'0');
+  // Analysis charts: collapsed by default; expand only if the user did so before.
+  [['cumulative','pl_cumulative_collapsed'], ['breakdown','pl_breakdown_collapsed']].forEach(([id, key])=>{
+    const sec = document.getElementById(id);
+    if(!sec) return;
+    if(localStorage.getItem(key)==='0') sec.classList.remove('collapsed');
+    sec.querySelector('.bd-head').addEventListener('click', ()=>{
+      sec.classList.toggle('collapsed');
+      localStorage.setItem(key, sec.classList.contains('collapsed')?'1':'0');
     });
-  }
+  });
 
   // Whole top analysis: hide for a list-only view (persisted)
   const analysis = document.getElementById('analysis');

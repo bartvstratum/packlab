@@ -41,7 +41,7 @@ $data = $list ? list_full((int) $list['id']) : null;
 <?php endif; ?>
 </main>
 
-<script src="collapse.js?v=2"></script>
+<script src="collapse.js?v=3"></script>
 
 </body>
 </html>
