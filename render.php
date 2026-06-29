@@ -6,29 +6,29 @@ function fmtg0($w) { return number_format(round((float) $w)); }
 
 function render_summary(array $t): void { ?>
   <section class="summary">
-    <div class="stat">
+    <div class="stat" data-k="base">
       <div class="k"><span class="material-symbols-rounded">inventory_2</span>Base weight</div>
-      <div class="v"><?= fmtg0($t['base']) ?> <small>g</small><span class="pct"><?= $t['base_pct'] ?>%</span></div>
+      <div class="v"><span class="v-num"><?= fmtg0($t['base']) ?></span> <small>g</small><span class="pct"><?= $t['base_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">+</div>
-    <div class="stat">
+    <div class="stat" data-k="consumable">
       <div class="k"><span class="material-symbols-rounded">restaurant</span>Consumable</div>
-      <div class="v"><?= fmtg0($t['consumable']) ?> <small>g</small><span class="pct"><?= $t['consumable_pct'] ?>%</span></div>
+      <div class="v"><span class="v-num"><?= fmtg0($t['consumable']) ?></span> <small>g</small><span class="pct"><?= $t['consumable_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">=</div>
-    <div class="stat">
+    <div class="stat" data-k="pack">
       <div class="k"><span class="material-symbols-rounded">backpack</span>Pack weight</div>
-      <div class="v"><?= fmtg0($t['pack']) ?> <small>g</small><span class="pct"><?= $t['pack_pct'] ?>%</span></div>
+      <div class="v"><span class="v-num"><?= fmtg0($t['pack']) ?></span> <small>g</small><span class="pct"><?= $t['pack_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">+</div>
-    <div class="stat">
+    <div class="stat" data-k="worn">
       <div class="k"><span class="material-symbols-rounded">checkroom</span>Worn</div>
-      <div class="v"><?= fmtg0($t['worn']) ?> <small>g</small><span class="pct"><?= $t['worn_pct'] ?>%</span></div>
+      <div class="v"><span class="v-num"><?= fmtg0($t['worn']) ?></span> <small>g</small><span class="pct"><?= $t['worn_pct'] ?>%</span></div>
     </div>
     <div class="op-sep" aria-hidden="true">=</div>
-    <div class="stat">
+    <div class="stat" data-k="total">
       <div class="k"><span class="material-symbols-rounded">scale</span>Total</div>
-      <div class="v"><?= fmtg0($t['total']) ?> <small>g</small><span class="pct">100%</span></div>
+      <div class="v"><span class="v-num"><?= fmtg0($t['total']) ?></span> <small>g</small><span class="pct">100%</span></div>
     </div>
   </section>
 <?php }
@@ -61,8 +61,8 @@ function render_categories(array $cats, bool $editable): void {
 <?php if (($it['description'] ?? '') !== ''): ?>
               <div class="item-desc"><?= h($it['description']) ?></div>
 <?php endif; ?>
-<?php if (!empty($it['url'])): ?>
-              <a class="item-link" href="<?= h($it['url']) ?>" target="_blank" rel="noopener" title="Open link"><span class="material-symbols-rounded">open_in_new</span></a>
+<?php if (($itUrl = safe_url($it['url'] ?? null)) !== null): ?>
+              <a class="item-link" href="<?= h($itUrl) ?>" target="_blank" rel="noopener" title="Open link"><span class="material-symbols-rounded">open_in_new</span></a>
 <?php endif; ?>
             </td>
             <td class="center col-meta">

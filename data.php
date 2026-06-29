@@ -7,6 +7,15 @@ function token(int $bytes = 5): string
     return bin2hex(random_bytes($bytes));
 }
 
+// Only allow http(s) links; rejects javascript:, data:, etc. (stored-XSS guard)
+function safe_url(?string $url): ?string
+{
+    $url = trim((string) $url);
+    if ($url === '') return null;
+    $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+    return in_array($scheme, ['http', 'https'], true) ? $url : null;
+}
+
 function next_pos(string $table, string $fk, int $fkVal): int
 {
     $allowed = ['lists' => 'user_id', 'categories' => 'list_id', 'items' => 'category_id'];
@@ -142,7 +151,7 @@ function item_create(int $catId, array $f): int
         !empty($f['worn']) ? 1 : 0,
         !empty($f['consumable']) ? 1 : 0,
         !empty($f['flag']) ? 1 : 0,
-        $f['url'] ?? null,
+        safe_url($f['url'] ?? null),
         $pos,
     ]);
     return (int) db()->lastInsertId();
@@ -159,7 +168,7 @@ function item_update(int $id, array $f): void
         !empty($f['worn']) ? 1 : 0,
         !empty($f['consumable']) ? 1 : 0,
         !empty($f['flag']) ? 1 : 0,
-        $f['url'] ?? null,
+        safe_url($f['url'] ?? null),
         $id,
     ]);
 }
