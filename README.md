@@ -1,4 +1,11 @@
-# PackLab - gear list editor
+# PackLab.app - gear list editor
+
+<p align="center">
+  <a href="https://packlab.app"><strong>🚀&nbsp; Try the live demo &nbsp;→</strong></a><br>
+  <sub>log in with <code>demo</code> / <code>demo</code> — no signup, have a poke around</sub>
+</p>
+
+> 🔒 **Closed beta** — accounts are invite-only for now; anyone can try the [demo](https://packlab.app) above.
 
 Sunday vibe-coding project: a modern looking LighterPack alternative with some bugs fixed,
 better mobile editing, and a few personal preferences baked in — most notably
