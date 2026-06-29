@@ -68,7 +68,9 @@ try {
                 throw new RuntimeException('Invalid flag', 400);
             }
             item_set_flag($id, $flag, !empty($in['value']) ? 1 : 0);
-            echo json_encode(['ok' => true]);
+            $listId = item_list_id($id);
+            $totals = $listId ? (list_full($listId)['totals'] ?? null) : null;
+            echo json_encode(['ok' => true, 'totals' => $totals]);
             break;
 
         case 'item_delete':
@@ -189,8 +191,14 @@ try {
             http_response_code(400);
             echo json_encode(['error' => 'Unknown action']);
     }
-} catch (Throwable $e) {
+} catch (RuntimeException $e) {
+    // Intentional, user-facing errors carry their own message + HTTP code
     $code = (int) $e->getCode();
     http_response_code($code >= 400 && $code < 600 ? $code : 400);
     echo json_encode(['error' => $e->getMessage()]);
+} catch (Throwable $e) {
+    // Unexpected: log details, return a generic message (no internals leaked)
+    error_log('api.php: ' . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['error' => 'Something went wrong']);
 }
