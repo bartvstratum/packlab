@@ -13,10 +13,21 @@ function h($s): string
     return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 }
 
-// Default category accent colors (cycled when creating categories)
+// Default category accent colors: Okabe-Ito colorblind-safe palette (colorful
+// first, neutral grey/black last). Cycled when creating categories.
 function category_palette(): array
 {
-    return ['#7c9cff', '#f08fb0', '#9b8cff', '#5bb3a9', '#f6a35c', '#74c47d', '#f6c453', '#6cc2d6'];
+    return [
+        '#0072b2', // blue
+        '#e69f00', // orange
+        '#009e73', // bluish green
+        '#d55e00', // vermillion
+        '#cc79a7', // reddish purple
+        '#56b4e9', // sky blue
+        '#f0e442', // yellow
+        '#999999', // grey
+        '#000000', // black
+    ];
 }
 
 // Only allow http(s) links; rejects javascript:, data:, etc. (stored-XSS guard)
