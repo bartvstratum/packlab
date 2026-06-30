@@ -16,6 +16,13 @@ $data = $listId ? list_full($listId) : null;
 <html lang="en">
 <head>
 <?php $pageTitle = 'PackLab'; require __DIR__ . '/head.php'; ?>
+<script>
+(function(){var d=document.documentElement;
+if(localStorage.getItem('pl_opt_summary')==='0')d.classList.add('hide-summary');
+if(localStorage.getItem('pl_opt_cumulative')==='0')d.classList.add('hide-cumulative');
+if(localStorage.getItem('pl_opt_breakdown')==='0')d.classList.add('hide-breakdown');
+if(localStorage.getItem('pl_opt_checklist')==='1')d.classList.add('show-checklist');})();
+</script>
 </head>
 <body>
 
@@ -47,6 +54,7 @@ $data = $listId ? list_full($listId) : null;
         <button class="lm-item" id="lmNew"><span class="material-symbols-rounded">add</span>New list</button>
 <?php if ($data): ?>
         <button class="lm-item" id="lmRename"><span class="material-symbols-rounded">edit</span>Rename list</button>
+        <button class="lm-item" id="lmDuplicate"><span class="material-symbols-rounded">content_copy</span>Duplicate list</button>
         <a class="lm-item" href="export.php?list=<?= $listId ?>"><span class="material-symbols-rounded">download</span>Export CSV</a>
 <?php endif; ?>
         <button class="lm-item" id="lmImport"><span class="material-symbols-rounded">upload</span>Import CSV</button>
@@ -56,6 +64,17 @@ $data = $listId ? list_full($listId) : null;
       </div>
     </div>
     <input type="file" id="importFile" accept=".csv,text/csv" hidden>
+<?php if ($data): ?>
+    <div class="opt-wrap">
+      <button class="icon-btn" id="optBtn" title="Options"><span class="material-symbols-rounded">tune</span></button>
+      <div class="list-menu opt-menu" id="optMenu" hidden>
+        <label class="lm-item opt-item"><input type="checkbox" id="optSummary">Summary &amp; Big 3</label>
+        <label class="lm-item opt-item"><input type="checkbox" id="optCumulative">Cumulative weight</label>
+        <label class="lm-item opt-item"><input type="checkbox" id="optBreakdown">Category breakdown</label>
+        <label class="lm-item opt-item"><input type="checkbox" id="optChecklist">Pack checklist</label>
+      </div>
+    </div>
+<?php endif; ?>
     <button class="icon-btn" id="shareBtn" title="Share"><span class="material-symbols-rounded">share</span></button>
     <a class="icon-btn" href="account.php" title="Account"><span class="material-symbols-rounded">account_circle</span></a>
   </div>
@@ -79,9 +98,10 @@ $data = $listId ? list_full($listId) : null;
       <button class="icon-btn" data-close title="Close"><span class="material-symbols-rounded">close</span></button>
     </div>
     <div class="modal-body">
-      <div class="field">
+      <div class="field ac-field">
         <label for="f-name">Name</label>
-        <input type="text" id="f-name" placeholder="e.g. Tent">
+        <input type="text" id="f-name" placeholder="e.g. Tent" autocomplete="off">
+        <div class="ac-list" id="acList" hidden></div>
       </div>
       <div class="field">
         <label for="f-desc">Description</label>
@@ -184,11 +204,12 @@ $data = $listId ? list_full($listId) : null;
 const PL = {
   csrf: <?= json_encode(csrf_token()) ?>,
   listId: <?= (int) $listId ?>,
-  listName: <?= json_encode($data['name'] ?? '') ?>
+  listName: <?= json_encode($data['name'] ?? '') ?>,
+  items: <?= json_encode(array_map(fn($it) => ['name' => $it['name'], 'weight' => (float) $it['weight'], 'desc' => $it['description'], 'url' => $it['url']], items_for_user($userId))) ?>
 };
 </script>
-<script src="collapse.js?v=3"></script>
-<script src="app.js?v=6"></script>
+<script src="collapse.js?v=4"></script>
+<script src="app.js?v=8"></script>
 
 </body>
 </html>

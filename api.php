@@ -65,7 +65,7 @@ try {
                 throw new RuntimeException('Item not found', 404);
             }
             $flag = (string) ($in['flag'] ?? '');
-            if (!in_array($flag, ['worn', 'consumable', 'flag'], true)) {
+            if (!in_array($flag, ['worn', 'consumable', 'flag', 'packed'], true)) {
                 throw new RuntimeException('Invalid flag', 400);
             }
             item_set_flag($id, $flag, !empty($in['value']) ? 1 : 0);
@@ -185,6 +185,24 @@ try {
                 throw new RuntimeException('Invalid list', 400);
             }
             list_delete($listId);
+            echo json_encode(['ok' => true]);
+            break;
+
+        case 'list_duplicate':
+            $listId = (int) ($in['list_id'] ?? 0);
+            if (!owns_list($uid, $listId)) {
+                throw new RuntimeException('Invalid list', 400);
+            }
+            $id = list_duplicate($listId);
+            echo json_encode(['ok' => true, 'id' => $id]);
+            break;
+
+        case 'list_reset_packed':
+            $listId = (int) ($in['list_id'] ?? 0);
+            if (!owns_list($uid, $listId)) {
+                throw new RuntimeException('Invalid list', 400);
+            }
+            list_reset_packed($listId);
             echo json_encode(['ok' => true]);
             break;
 

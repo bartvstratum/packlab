@@ -145,6 +145,57 @@ function list_share_enable(int $id): string
     return $t;
 }
 
+// Deep-copy a list (categories + items, all flags) into a new list for the same user.
+function list_duplicate(int $listId, ?string $name = null): int
+{
+    return with_transaction(function () use ($listId, $name) {
+        $src = list_get($listId);
+        if (!$src) throw new RuntimeException('List not found', 404);
+        $newName = ($name !== null && trim($name) !== '') ? trim($name) : $src['name'] . ' (copy)';
+        $newId = list_create((int) $src['user_id'], $newName);
+        foreach (categories_for_list($listId) as $c) {
+            $newCat = category_create($newId, $c['name'], $c['color'], $c['icon']);
+            foreach (items_for_category((int) $c['id']) as $it) {
+                item_create($newCat, [
+                    'name'        => $it['name'],
+                    'description' => $it['description'],
+                    'weight'      => $it['weight'],
+                    'qty'         => $it['qty'],
+                    'worn'        => $it['worn'],
+                    'consumable'  => $it['consumable'],
+                    'flag'        => $it['flag'],
+                    'big3'        => $it['big3'],
+                    'packed'      => $it['packed'],
+                    'url'         => $it['url'],
+                ]);
+            }
+        }
+        return $newId;
+    });
+}
+
+// Clear the pack-checklist ticks for every item in a list.
+function list_reset_packed(int $listId): void
+{
+    db()->prepare('UPDATE items SET packed = 0 WHERE category_id IN (SELECT id FROM categories WHERE list_id = ?)')
+        ->execute([$listId]);
+}
+
+// Distinct items across all of a user's lists (for the add-item autocomplete).
+function items_for_user(int $uid): array
+{
+    $s = db()->prepare(
+        'SELECT DISTINCT i.name, i.weight, i.description, i.url
+         FROM items i
+         JOIN categories c ON c.id = i.category_id
+         JOIN lists l ON l.id = c.list_id
+         WHERE l.user_id = ?
+         ORDER BY i.name COLLATE NOCASE'
+    );
+    $s->execute([$uid]);
+    return $s->fetchAll();
+}
+
 function categories_for_list(int $listId): array
 {
     $s = db()->prepare('SELECT * FROM categories WHERE list_id = ? ORDER BY position, id');
@@ -182,7 +233,7 @@ function items_for_category(int $catId): array
 function item_create(int $catId, array $f): int
 {
     $pos = next_pos('items', 'category_id', $catId);
-    $s = db()->prepare('INSERT INTO items (category_id, name, description, weight, qty, worn, consumable, flag, big3, url, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $s = db()->prepare('INSERT INTO items (category_id, name, description, weight, qty, worn, consumable, flag, big3, packed, url, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     $s->execute([
         $catId,
         $f['name'],
@@ -193,6 +244,7 @@ function item_create(int $catId, array $f): int
         !empty($f['consumable']) ? 1 : 0,
         !empty($f['flag']) ? 1 : 0,
         !empty($f['big3']) ? 1 : 0,
+        !empty($f['packed']) ? 1 : 0,
         safe_url($f['url'] ?? null),
         $pos,
     ]);
@@ -218,7 +270,7 @@ function item_update(int $id, array $f): void
 
 function item_set_flag(int $id, string $flag, int $val): void
 {
-    if (!in_array($flag, ['worn', 'consumable', 'flag'], true)) return;
+    if (!in_array($flag, ['worn', 'consumable', 'flag', 'packed'], true)) return;
     // worn and consumable are mutually exclusive: turning one on clears the other
     if ($val && $flag === 'worn') {
         db()->prepare('UPDATE items SET worn = 1, consumable = 0 WHERE id = ?')->execute([$id]);

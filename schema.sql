@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS items (
   consumable  INTEGER NOT NULL DEFAULT 0,
   flag        INTEGER NOT NULL DEFAULT 0,
   big3        INTEGER NOT NULL DEFAULT 0,
+  packed      INTEGER NOT NULL DEFAULT 0,
   url         TEXT,
   position    INTEGER NOT NULL DEFAULT 0
 );

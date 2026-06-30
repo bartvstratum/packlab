@@ -180,8 +180,8 @@ thead th{
 th.center,td.center{text-align:center}
 th.right,td.right{text-align:right}
 /* Item column takes all slack; right-side columns shrink to content */
-thead th:first-child,tbody td.col-item{width:100%}
-thead th:not(:first-child),tbody td:not(.col-item){white-space:nowrap}
+thead th.col-item,tbody td.col-item{width:100%}
+thead th:not(.col-item),tbody td:not(.col-item){white-space:nowrap}
 tbody td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover{background:#fafbfc}
@@ -400,3 +400,41 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 
 /* category options menu: position by left only (not stretched to viewport edge) */
 .cat-menu{right:auto;min-width:170px}
+
+/* options (visibility) menu */
+.opt-wrap{position:relative}
+.opt-item{cursor:pointer}
+.opt-item input{margin:0;width:16px;height:16px;accent-color:var(--accent)}
+
+/* visibility preferences (classes set on <html>) */
+html.hide-summary .summary,html.hide-summary .big3{display:none}
+html.hide-cumulative #cumulative{display:none}
+html.hide-breakdown #breakdown{display:none}
+
+/* pack checklist */
+.col-check{width:1%;text-align:center}
+.col-check,.checklist-only{display:none}
+html.show-checklist td.col-check,html.show-checklist th.col-check{display:table-cell}
+html.show-checklist .checklist-only{display:inline-flex}
+.pack-check{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border:1.5px solid var(--border);border-radius:6px;
+  color:transparent;cursor:pointer;transition:background .12s,border-color .12s;
+}
+.pack-check .material-symbols-rounded{font-size:18px}
+.pack-check:hover{border-color:var(--accent)}
+.pack-check.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* add-item name autocomplete */
+.ac-field{position:relative}
+.ac-list{
+  position:absolute;left:0;right:0;top:100%;z-index:50;margin-top:4px;
+  background:var(--surface);border:1px solid var(--border);border-radius:9px;
+  box-shadow:0 8px 28px rgba(16,24,40,.16);max-height:240px;overflow:auto;
+}
+.ac-list[hidden]{display:none}
+.ac-row{display:flex;align-items:baseline;gap:10px;padding:8px 12px;cursor:pointer;font-size:14px}
+.ac-row:hover{background:var(--bg)}
+.ac-main{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ac-desc{color:var(--muted);font-size:13px}
+.ac-w{flex:none;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}

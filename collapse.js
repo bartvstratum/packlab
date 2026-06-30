@@ -32,21 +32,4 @@
       localStorage.setItem(key, sec.classList.contains('collapsed')?'1':'0');
     });
   });
-
-  // Whole top analysis: hide for a list-only view (persisted)
-  const analysis = document.getElementById('analysis');
-  const toggleAnalysis = document.getElementById('toggleAnalysis');
-  if(analysis && toggleAnalysis){
-    const syncAnalysis = ()=>{
-      toggleAnalysis.querySelector('.lbl').textContent =
-        analysis.classList.contains('collapsed') ? 'Show analysis' : 'Hide analysis';
-    };
-    if(localStorage.getItem('pl_analysis_hidden')==='1') analysis.classList.add('collapsed');
-    syncAnalysis();
-    toggleAnalysis.addEventListener('click', ()=>{
-      analysis.classList.toggle('collapsed');
-      localStorage.setItem('pl_analysis_hidden', analysis.classList.contains('collapsed')?'1':'0');
-      syncAnalysis();
-    });
-  }
 })();

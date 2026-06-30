@@ -27,7 +27,7 @@ function db(): PDO
 
     // Lightweight migrations: add any missing item columns
     $cols = $pdo->query("PRAGMA table_info(items)")->fetchAll(PDO::FETCH_COLUMN, 1);
-    foreach (['flag', 'big3'] as $c) {
+    foreach (['flag', 'big3', 'packed'] as $c) {
         if (!in_array($c, $cols, true)) {
             $pdo->exec("ALTER TABLE items ADD COLUMN $c INTEGER NOT NULL DEFAULT 0");
         }

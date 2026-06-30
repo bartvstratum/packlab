@@ -50,11 +50,14 @@ function render_categories(array $cats, bool $editable): void {
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><?php if ($editable): ?><th></th><?php endif; ?></tr>
+          <tr><?php if ($editable): ?><th class="col-check"></th><?php endif; ?><th class="col-item">Item</th><th class="center">Flags</th><th class="right">Weight</th><th class="center">Qty</th><?php if ($editable): ?><th></th><?php endif; ?></tr>
         </thead>
         <tbody>
 <?php foreach ($c['items'] as $it): ?>
-          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>" data-flag="<?= (int) $it['flag'] ?>" data-big3="<?= (int) $it['big3'] ?>"<?php endif; ?>>
+          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>" data-flag="<?= (int) $it['flag'] ?>" data-big3="<?= (int) $it['big3'] ?>" data-packed="<?= (int) $it['packed'] ?>"<?php endif; ?>>
+<?php if ($editable): ?>
+            <td class="col-check center"><span class="pack-check<?= $it['packed'] ? ' on' : '' ?>" role="button" tabindex="0" title="Packed"><span class="material-symbols-rounded">check</span></span></td>
+<?php endif; ?>
             <td class="col-item">
               <div class="item-name"><?= h($it['name']) ?></div>
 <?php if (($it['description'] ?? '') !== ''): ?>
@@ -194,10 +197,10 @@ function render_list(array $data, bool $editable): void { ?>
   render_breakdown($data['categories']); ?>
   </div>
   <div class="list-tools">
-    <button class="toggle-all" id="toggleAnalysis" style="margin-right:auto">
-      <span class="material-symbols-rounded">insights</span><span class="lbl">Hide analysis</span>
-    </button>
 <?php if ($editable): ?>
+    <button class="toggle-all checklist-only" id="resetChecklist" style="margin-right:auto">
+      <span class="material-symbols-rounded">restart_alt</span><span class="lbl">Reset checklist</span>
+    </button>
     <button class="toggle-all" id="sortCats" title="Sort categories and all items by weight">
       <span class="material-symbols-rounded">sort</span><span class="lbl">Sort by weight</span>
     </button>

@@ -273,3 +273,93 @@ document.getElementById('cmDelete').addEventListener('click', async ()=>{
   await api({action:'category_delete', category_id:id});
   location.reload();
 });
+
+// duplicate list (deep copy)
+const lmDuplicate = document.getElementById('lmDuplicate');
+if(lmDuplicate) lmDuplicate.addEventListener('click', async ()=>{
+  const r = await api({action:'list_duplicate', list_id:LIST_ID});
+  location.href = '?list=' + r.id;
+});
+
+// pack checklist: tick items (optimistic, no reload)
+document.querySelectorAll('.pack-check').forEach(c=>{
+  const toggle = async ()=>{
+    if(c.dataset.busy) return;
+    c.dataset.busy='1';
+    const on = !c.classList.contains('on');
+    c.classList.toggle('on', on);
+    const tr=c.closest('tr');
+    try{
+      await api({action:'item_flag', id:parseInt(tr.dataset.itemId), flag:'packed', value:on?1:0});
+      tr.dataset.packed = on?'1':'0';
+    }catch(e){
+      c.classList.toggle('on', !on);
+    }finally{
+      delete c.dataset.busy;
+    }
+  };
+  c.addEventListener('click', toggle);
+  c.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); }});
+});
+
+const resetChecklist = document.getElementById('resetChecklist');
+if(resetChecklist) resetChecklist.addEventListener('click', async ()=>{
+  if(!confirm('Uncheck every item in this list?')) return;
+  await api({action:'list_reset_packed', list_id:LIST_ID});
+  location.reload();
+});
+
+// options menu: show/hide sections (prefs as classes on <html>, persisted)
+const optBtn = document.getElementById('optBtn');
+const optMenu = document.getElementById('optMenu');
+if(optBtn && optMenu){
+  optBtn.addEventListener('click', e=>{ e.stopPropagation(); optMenu.hidden = !optMenu.hidden; });
+  document.addEventListener('click', e=>{ if(!optMenu.hidden && !e.target.closest('.opt-wrap')) optMenu.hidden = true; });
+  const root = document.documentElement;
+  [['optSummary','pl_opt_summary','hide-summary'],
+   ['optCumulative','pl_opt_cumulative','hide-cumulative'],
+   ['optBreakdown','pl_opt_breakdown','hide-breakdown'],
+   ['optChecklist','pl_opt_checklist','show-checklist']].forEach(([id,key,cls])=>{
+    const box = document.getElementById(id);
+    if(!box) return;
+    const isHide = cls.indexOf('hide-')===0;
+    box.checked = isHide ? !root.classList.contains(cls) : root.classList.contains(cls);
+    box.addEventListener('change', ()=>{
+      root.classList.toggle(cls, isHide ? !box.checked : box.checked);
+      localStorage.setItem(key, box.checked ? '1' : '0');
+    });
+  });
+}
+
+// add-item: autocomplete the Name field from items across all your lists
+const acList = document.getElementById('acList');
+if(acList && Array.isArray(PL.items)){
+  let acMatches = [];
+  const esc = s => s.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+  const closeAc = ()=>{ acList.hidden = true; acList.innerHTML=''; };
+  const pick = it => {
+    fName.value = it.name;
+    if(it.weight) fWeight.value = it.weight;
+    if(it.desc) fDesc.value = it.desc;
+    if(it.url) fUrl.value = it.url;
+    closeAc();
+  };
+  fName.addEventListener('input', ()=>{
+    const q = fName.value.trim().toLowerCase();
+    if(!q){ closeAc(); return; }
+    acMatches = PL.items.filter(it => it.name.toLowerCase().includes(q)).slice(0, 8);
+    if(!acMatches.length){ closeAc(); return; }
+    acList.innerHTML = acMatches.map((it,i)=>
+      '<div class="ac-row" data-i="'+i+'"><span class="ac-main"><span class="ac-name">'+esc(it.name)+'</span>'+
+      (it.desc ? ' <span class="ac-desc">'+esc(it.desc)+'</span>' : '')+
+      '</span><span class="ac-w">'+Math.round(it.weight).toLocaleString('en-US')+' g</span></div>').join('');
+    acList.hidden = false;
+  });
+  acList.addEventListener('mousedown', e=>{   // mousedown fires before blur
+    const row = e.target.closest('.ac-row'); if(!row) return;
+    e.preventDefault();
+    pick(acMatches[parseInt(row.dataset.i)]);
+  });
+  fName.addEventListener('blur', ()=> setTimeout(closeAc, 120));
+  fName.addEventListener('keydown', e=>{ if(e.key==='Escape') closeAc(); });
+}
