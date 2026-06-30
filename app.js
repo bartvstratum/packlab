@@ -347,7 +347,7 @@ if(acList && Array.isArray(PL.items)){
   fName.addEventListener('input', ()=>{
     const q = fName.value.trim().toLowerCase();
     if(!q){ closeAc(); return; }
-    acMatches = PL.items.filter(it => it.name.toLowerCase().includes(q)).slice(0, 8);
+    acMatches = PL.items.filter(it => it.name.toLowerCase().includes(q) || (it.desc && it.desc.toLowerCase().includes(q))).slice(0, 8);
     if(!acMatches.length){ closeAc(); return; }
     acList.innerHTML = acMatches.map((it,i)=>
       '<div class="ac-row" data-i="'+i+'"><span class="ac-main"><span class="ac-name">'+esc(it.name)+'</span>'+
