@@ -187,6 +187,7 @@ tbody tr:last-child td{border-bottom:none}
 tbody tr:hover{background:#fafbfc}
 .item-name,.item-desc{display:inline}
 .item-name{font-weight:600}
+.qty0 .item-name,.qty0 .item-desc{text-decoration:line-through;text-decoration-thickness:1.5px;color:var(--muted)}
 .big3-badge{font-size:16px;color:var(--accent);vertical-align:middle;margin-left:5px}
 .item-desc{font-size:13px;color:var(--muted);margin-left:7px}
 .item-link{

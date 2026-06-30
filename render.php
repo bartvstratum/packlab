@@ -54,7 +54,7 @@ function render_categories(array $cats, bool $editable): void {
         </thead>
         <tbody>
 <?php foreach ($c['items'] as $it): ?>
-          <tr data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>" data-flag="<?= (int) $it['flag'] ?>" data-big3="<?= (int) $it['big3'] ?>" data-packed="<?= (int) $it['packed'] ?>"<?php endif; ?>>
+          <tr class="<?= (int) $it['qty'] === 0 ? 'qty0' : '' ?>" data-item-id="<?= (int) $it['id'] ?>"<?php if ($editable): ?> data-name="<?= h($it['name']) ?>" data-desc="<?= h($it['description'] ?? '') ?>" data-url="<?= h($it['url'] ?? '') ?>" data-weight="<?= h($it['weight']) ?>" data-qty="<?= (int) $it['qty'] ?>" data-worn="<?= (int) $it['worn'] ?>" data-consumable="<?= (int) $it['consumable'] ?>" data-flag="<?= (int) $it['flag'] ?>" data-big3="<?= (int) $it['big3'] ?>" data-packed="<?= (int) $it['packed'] ?>"<?php endif; ?>>
 <?php if ($editable): ?>
             <td class="col-check center"><span class="pack-check<?= $it['packed'] ? ' on' : '' ?>" role="button" tabindex="0" title="Packed"><span class="material-symbols-rounded">check</span></span></td>
 <?php endif; ?>
