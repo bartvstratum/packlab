@@ -21,6 +21,7 @@ $data = $listId ? list_full($listId) : null;
 if(localStorage.getItem('pl_opt_summary')==='0')d.classList.add('hide-summary');
 if(localStorage.getItem('pl_opt_cumulative')==='0')d.classList.add('hide-cumulative');
 if(localStorage.getItem('pl_opt_breakdown')==='0')d.classList.add('hide-breakdown');
+if(localStorage.getItem('pl_opt_treemap')==='0')d.classList.add('hide-treemap');
 if(localStorage.getItem('pl_opt_checklist')==='1')d.classList.add('show-checklist');})();
 </script>
 </head>
@@ -69,7 +70,8 @@ if(localStorage.getItem('pl_opt_checklist')==='1')d.classList.add('show-checklis
       <button class="icon-btn" id="optBtn" title="Options"><span class="material-symbols-rounded">tune</span></button>
       <div class="list-menu opt-menu" id="optMenu" hidden>
         <label class="lm-item opt-item"><input type="checkbox" id="optSummary">Summary &amp; Big 3</label>
-        <label class="lm-item opt-item"><input type="checkbox" id="optCumulative">Cumulative weight</label>
+        <label class="lm-item opt-item"><input type="checkbox" id="optCumulative">Item weights</label>
+        <label class="lm-item opt-item"><input type="checkbox" id="optTreemap">Treemap</label>
         <label class="lm-item opt-item"><input type="checkbox" id="optBreakdown">Category breakdown</label>
         <label class="lm-item opt-item"><input type="checkbox" id="optChecklist">Pack checklist</label>
       </div>
@@ -208,8 +210,8 @@ const PL = {
   items: <?= json_encode(array_map(fn($it) => ['name' => $it['name'], 'weight' => (float) $it['weight'], 'desc' => $it['description'], 'url' => $it['url']], items_for_user($userId))) ?>
 };
 </script>
-<script src="collapse.js?v=6"></script>
-<script src="app.js?v=8"></script>
+<script src="collapse.js?v=7"></script>
+<script src="app.js?v=9"></script>
 
 </body>
 </html>

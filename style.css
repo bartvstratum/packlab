@@ -148,6 +148,20 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 120px}
 .bd-row[hidden]{display:none}
 /* per-item mode: bars show each item's share, so the cumulative quartile lines don't apply */
 #cumulative.per-item .bd-track::after{display:none}
+/* treemap */
+.tm-body{display:block}
+.tm-chart{position:relative;width:100%;min-height:40px}
+.tm-chart svg{display:block}
+.tm-cell{cursor:default}
+.tm-cell rect{stroke:var(--surface);stroke-width:1.5px;transition:filter .1s}
+.tm-cell:hover rect{filter:brightness(1.08)}
+.tm-label{fill:#fff;font-size:11px;font-weight:600;dominant-baseline:hanging;paint-order:stroke;stroke:rgba(0,0,0,.3);stroke-width:2.5px;pointer-events:none}
+.tm-empty{color:var(--muted);padding:20px 0;text-align:center}
+.tm-tip{position:absolute;left:0;top:0;pointer-events:none;z-index:6;background:var(--text);color:#fff;
+  padding:6px 9px;border-radius:8px;font-size:12px;line-height:1.35;box-shadow:var(--shadow);
+  opacity:0;transition:opacity .08s;white-space:nowrap}
+.tm-tip.on{opacity:1}
+.tm-tip .tm-tip-sub{color:#c9ccd2}
 
 /* ---------- Category ---------- */
 .category{
@@ -419,6 +433,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 html.hide-summary .summary,html.hide-summary .big3{display:none}
 html.hide-cumulative #cumulative{display:none}
 html.hide-breakdown #breakdown{display:none}
+html.hide-treemap #treemap{display:none}
 
 /* pack checklist */
 .col-check{width:1%;text-align:center}

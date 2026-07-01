@@ -184,12 +184,53 @@ function render_cumulative(array $cats, float $total): void {
   </section>
 <?php }
 
+// Flat treemap of every item, sized by weight and tinted by pack category. The
+// item data is emitted as JSON; the client lays it out (squarified) as SVG and
+// handles the base/worn/consumable filters + tooltip.
+function render_treemap(array $cats): void {
+  $items = [];
+  foreach ($cats as $c) {
+    foreach ($c['items'] as $it) {
+      $w = (float) $it['weight'];
+      $qty = (int) $it['qty'];
+      $lw = (float) ($it['line_weight'] ?? $w * $qty);
+      if ($lw <= 0) continue;
+      $cat = !empty($it['worn']) ? 'worn' : (!empty($it['consumable']) ? 'consumable' : 'base');
+      $items[] = [
+        'name' => $it['name'],
+        'unit' => $w,
+        'qty' => $qty,
+        'cat' => $cat,
+        'category' => $c['name'],
+        'color' => $c['color'] ?: '#cccccc',
+      ];
+    }
+  }
+  if (!$items) return; ?>
+  <section class="breakdown collapsed" id="treemap">
+    <div class="bd-head">
+      <span class="material-symbols-rounded chev">expand_more</span>
+      <span class="bd-title">Treemap</span>
+    </div>
+    <div class="bd-body tm-body">
+      <div class="bd-filters">
+        <label><input type="checkbox" class="tm-filter" value="base" checked> Base</label>
+        <label><input type="checkbox" class="tm-filter" value="worn" checked> Worn</label>
+        <label><input type="checkbox" class="tm-filter" value="consumable" checked> Consumables</label>
+      </div>
+      <div class="tm-chart" id="tmChart"></div>
+      <script type="application/json" id="tmData"><?= json_encode($items, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE) ?></script>
+    </div>
+  </section>
+<?php }
+
 function render_list(array $data, bool $editable): void { ?>
   <div class="analysis" id="analysis">
 <?php
   render_summary($data['totals']);
   render_big3($data['big3'] ?? ['items' => []]);
   render_cumulative($data['categories'], (float) ($data['totals']['total'] ?? 0));
+  render_treemap($data['categories']);
   render_breakdown($data['categories']); ?>
   </div>
   <div class="list-tools">

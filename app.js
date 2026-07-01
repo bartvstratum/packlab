@@ -319,6 +319,7 @@ if(optBtn && optMenu){
   [['optSummary','pl_opt_summary','hide-summary'],
    ['optCumulative','pl_opt_cumulative','hide-cumulative'],
    ['optBreakdown','pl_opt_breakdown','hide-breakdown'],
+   ['optTreemap','pl_opt_treemap','hide-treemap'],
    ['optChecklist','pl_opt_checklist','show-checklist']].forEach(([id,key,cls])=>{
     const box = document.getElementById(id);
     if(!box) return;
