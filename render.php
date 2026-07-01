@@ -163,8 +163,14 @@ function render_cumulative(array $cats, float $total): void {
   $items = [];
   foreach ($cats as $c) {
     foreach ($c['items'] as $it) {
-      $lw = (float) ($it['line_weight'] ?? (float) $it['weight'] * (int) $it['qty']);
-      if ($lw > 0) $items[] = ['name' => $it['name'], 'w' => $lw];
+      $w = (float) $it['weight'];
+      $qty = (int) $it['qty'];
+      $lw = (float) ($it['line_weight'] ?? $w * $qty);
+      if ($lw <= 0) continue;
+      $cat = !empty($it['worn']) ? 'worn' : (!empty($it['consumable']) ? 'consumable' : 'base');
+      // 'w' is the initial (all-filters-on) line weight; unit weight + qty let the
+      // client recompute when worn items get split (1 unit worn, rest in the pack).
+      $items[] = ['name' => $it['name'], 'w' => $lw, 'unit' => $w, 'qty' => $qty, 'cat' => $cat];
     }
   }
   if (!$items) return;
@@ -176,11 +182,16 @@ function render_cumulative(array $cats, float $total): void {
       <span class="bd-title">Cumulative weight</span>
     </div>
     <div class="bd-body">
+      <div class="bd-filters">
+        <label><input type="checkbox" class="cum-filter" value="base" checked> Base</label>
+        <label><input type="checkbox" class="cum-filter" value="worn" checked> Worn</label>
+        <label><input type="checkbox" class="cum-filter" value="consumable" checked> Consumables</label>
+      </div>
 <?php $run = 0.0; foreach ($items as $idx => $it): $run += $it['w']; $pct = $total > 0 ? $run / $total * 100 : 0; ?>
-      <div class="bd-row">
+      <div class="bd-row" data-cat="<?= $it['cat'] ?>" data-unit="<?= $it['unit'] ?>" data-qty="<?= $it['qty'] ?>">
         <span class="bd-num"><?= $idx + 1 ?></span>
         <span class="bd-name"><?= h($it['name']) ?> <span class="bd-sub">(<?= fmtg0($it['w']) ?> g)</span></span>
-        <span class="bd-track"><span class="bd-bar" style="width:<?= round($pct, 1) ?>%;background:<?= color_scale($run / $total) ?>"></span></span>
+        <span class="bd-track"><span class="bd-bar" style="width:<?= round($pct, 1) ?>%;background:<?= color_scale($total > 0 ? ($run - $it['w']) / $total : 0) ?>"></span></span>
         <span class="bd-val"><?= round($pct) ?>%</span>
       </div>
 <?php endforeach; ?>

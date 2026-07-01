@@ -208,7 +208,7 @@ const PL = {
   items: <?= json_encode(array_map(fn($it) => ['name' => $it['name'], 'weight' => (float) $it['weight'], 'desc' => $it['description'], 'url' => $it['url']], items_for_user($userId))) ?>
 };
 </script>
-<script src="collapse.js?v=4"></script>
+<script src="collapse.js?v=5"></script>
 <script src="app.js?v=8"></script>
 
 </body>

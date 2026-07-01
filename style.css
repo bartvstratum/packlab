@@ -140,6 +140,11 @@ main{max-width:1180px;margin:0 auto;padding:16px 16px 120px}
     transparent calc(75% - 1px),rgba(0,0,0,.3) calc(75% - 1px) 75%,transparent 75%)}
 .bd-val{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
 .bd-val b{color:var(--text);font-weight:600}
+/* cumulative chart include/exclude filters */
+.bd-filters{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:14px;margin-bottom:6px}
+.bd-filters label{display:inline-flex;align-items:center;gap:5px;cursor:pointer;color:var(--muted)}
+.bd-filters input{margin:0;cursor:pointer}
+.bd-row[hidden]{display:none}
 
 /* ---------- Category ---------- */
 .category{
