@@ -136,29 +136,9 @@ function render_breakdown(array $cats): void {
   </section>
 <?php }
 
-// Sample a value t in [0,1] on the ColorBrewer RdYlBu ramp (red -> blue), returns #rrggbb.
-function color_scale(float $t): string {
-  $t = max(0.0, min(1.0, $t));
-  $stops = [
-    [0xa5,0x00,0x26], [0xd7,0x30,0x27], [0xf4,0x6d,0x43], [0xfd,0xae,0x61],
-    [0xfe,0xe0,0x90], [0xff,0xff,0xbf], [0xe0,0xf3,0xf8], [0xab,0xd9,0xe9],
-    [0x74,0xad,0xd1], [0x45,0x75,0xb4], [0x31,0x36,0x95],
-  ];
-  $n = count($stops) - 1;
-  $x = $t * $n;
-  $i = min($n - 1, (int) floor($x));
-  $f = $x - $i;
-  [$ar, $ag, $ab] = $stops[$i];
-  [$br, $bg, $bb] = $stops[$i + 1];
-  return sprintf('#%02x%02x%02x',
-    (int) round($ar + ($br - $ar) * $f),
-    (int) round($ag + ($bg - $ag) * $f),
-    (int) round($ab + ($bb - $ab) * $f));
-}
-
-// Cumulative weight of every item (ignoring categories), heaviest first.
-// Each bar is the running % of total, so it climbs to 100% — big jumps at the
-// top, a long flat tail at the bottom.
+// Per-item weight chart, heaviest first, with each bar tinted by its pack
+// category colour. The client can toggle a cumulative view (running % climbing
+// to 100%) and include/exclude base/worn/consumable items.
 function render_cumulative(array $cats, float $total): void {
   $items = [];
   foreach ($cats as $c) {
@@ -170,29 +150,34 @@ function render_cumulative(array $cats, float $total): void {
       $cat = !empty($it['worn']) ? 'worn' : (!empty($it['consumable']) ? 'consumable' : 'base');
       // 'w' is the initial (all-filters-on) line weight; unit weight + qty let the
       // client recompute when worn items get split (1 unit worn, rest in the pack).
-      $items[] = ['name' => $it['name'], 'w' => $lw, 'unit' => $w, 'qty' => $qty, 'cat' => $cat];
+      // 'color' is the item's category colour — bars are tinted by category.
+      $items[] = ['name' => $it['name'], 'w' => $lw, 'unit' => $w, 'qty' => $qty, 'cat' => $cat, 'color' => $c['color'] ?: '#cccccc'];
     }
   }
   if (!$items) return;
   usort($items, fn($a, $b) => $b['w'] <=> $a['w']);
   $total = $total ?: array_sum(array_column($items, 'w')); ?>
-  <section class="breakdown collapsed" id="cumulative">
+  <section class="breakdown collapsed per-item" id="cumulative">
     <div class="bd-head">
       <span class="material-symbols-rounded chev">expand_more</span>
-      <span class="bd-title">Cumulative weight</span>
+      <span class="bd-title">Item weights</span>
     </div>
     <div class="bd-body">
       <div class="bd-filters">
         <label><input type="checkbox" class="cum-filter" value="base" checked> Base</label>
         <label><input type="checkbox" class="cum-filter" value="worn" checked> Worn</label>
         <label><input type="checkbox" class="cum-filter" value="consumable" checked> Consumables</label>
+        <span class="bd-filter-sep" aria-hidden="true"></span>
+        <label><input type="checkbox" id="cumToggle"> Cumulative</label>
       </div>
-<?php $run = 0.0; foreach ($items as $idx => $it): $run += $it['w']; $pct = $total > 0 ? $run / $total * 100 : 0; ?>
+<?php $max = (float) $items[0]['w']; foreach ($items as $idx => $it):
+        $share = $total > 0 ? $it['w'] / $total * 100 : 0;
+        $width = $max > 0 ? $it['w'] / $max * 100 : 0; ?>
       <div class="bd-row" data-cat="<?= $it['cat'] ?>" data-unit="<?= $it['unit'] ?>" data-qty="<?= $it['qty'] ?>">
         <span class="bd-num"><?= $idx + 1 ?></span>
         <span class="bd-name"><?= h($it['name']) ?> <span class="bd-sub">(<?= fmtg0($it['w']) ?> g)</span></span>
-        <span class="bd-track"><span class="bd-bar" style="width:<?= round($pct, 1) ?>%;background:<?= color_scale($total > 0 ? ($run - $it['w']) / $total : 0) ?>"></span></span>
-        <span class="bd-val"><?= round($pct) ?>%</span>
+        <span class="bd-track"><span class="bd-bar" style="width:<?= round($width, 1) ?>%;background:<?= h($it['color']) ?>"></span></span>
+        <span class="bd-val"><?= number_format($share, 1) ?>%</span>
       </div>
 <?php endforeach; ?>
     </div>
